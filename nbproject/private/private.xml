@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Manager/ManagerMenuFastFood.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Salesman/SalesmanMenuFastFood.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Model/Employee/Employee.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Salesman/SalesmanFoodCar.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Salesman/SalesmanPersonalInfo.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Dao/SalesmanDao.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Manager/ManagerDashboardView.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Manager_Salesman/ManagerSalesmans.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Notification/NotificationContent.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/MessageNotify/GraphicsUtilities.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/MessageNotify/ShadowRenderer.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Manager/ManagerPersonalInfo.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Manager_Salesman/SalesmansCustom.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Item/FoodCardItem.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Salesman/OrderFoodCustom.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Notification/NotificationCustom.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Controller/SalesmanController.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Salesman/SalesmanDashboardView.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Notification/NotificationView.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/MessageNotify/MessageNotify.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Item/FastFoodItem.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Login/LoginView.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Item/NotificationItem.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Admin_Managers/ManagersCustom.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Admin_Managers/AdminManagers.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Controller/ManagerController.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/JDBCConnect/DataConnect.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Dao/ManagerDao.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Dao/FoodDao.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Controller/FoodController.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Salesman/OnlineOrder.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Model/Notification/Notification.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Admin/AdminDashboardView.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Item/MenuItem.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/Model/Food/Food.java</file>
+            <file>file:/F:/JavaBase/QuanLyCuaHangThucAn/src/View/Manager/MenuFastFoodCustom.java</file>
+        </group>
+    </open-files>
+</project-private>
