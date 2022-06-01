@@ -35,8 +35,9 @@ public class NotificationContent extends javax.swing.JFrame {
     private void initComponents() {
 
         lbTitle = new javax.swing.JLabel();
-        lbContent = new javax.swing.JLabel();
         lbDate = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lbContent = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("NỘI DUNG");
@@ -48,31 +49,32 @@ public class NotificationContent extends javax.swing.JFrame {
         lbTitle.setOpaque(true);
         lbTitle.setPreferredSize(new java.awt.Dimension(37, 75));
 
+        lbDate.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
+        lbDate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbDate.setText("Date");
+
         lbContent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbContent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbContent.setText("NHÌU khi");
         lbContent.setToolTipText("");
         lbContent.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        lbDate.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        lbDate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbDate.setText("Date");
+        jScrollPane1.setViewportView(lbContent);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lbDate, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(lbDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
-                .addComponent(lbContent, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
                 .addComponent(lbDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -116,6 +118,7 @@ public class NotificationContent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbContent;
     private javax.swing.JLabel lbDate;
     private javax.swing.JLabel lbTitle;

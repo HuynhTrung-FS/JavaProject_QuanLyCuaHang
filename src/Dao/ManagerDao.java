@@ -87,8 +87,8 @@ public class ManagerDao {
         }
         return dataList;
     }
-    //hiên thị dữ liệu nhân viên quản lý
-    public List<Employee> showData(){
+    //hiển thị dữ liệu nhân viên quản lý
+    public List<Employee> chooseDataManager(){
         List<Employee> dataList = new ArrayList<>();
         String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN Where ChucVu = 2";
         try

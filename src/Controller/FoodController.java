@@ -50,6 +50,7 @@ public class FoodController {
             a.addRow(row);       
         }
     }
+    //Chọn ảnh 
     public void updateLabelImage(String path,JLabel lbImage) {
         ImageIcon icon = new ImageIcon(path);
         if(icon != null){
@@ -64,6 +65,7 @@ public class FoodController {
             lbImage.setIcon(null);
         }
     }
+    //
     public void clickTableData(JTextField txtMaDA,JTextField txtNameFood,JTextField txtPrice,JComboBox cbType,JTextField txtLinkImage,JLabel lbImage,DefaultTableModel tableModel,int selectedRow){
         txtMaDA.setText(tableModel.getValueAt(selectedRow, 0).toString());
         txtNameFood.setText(tableModel.getValueAt(selectedRow, 1).toString());
@@ -113,6 +115,7 @@ public class FoodController {
         MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Thêm Món Ăn Thành Công!!");
         message.showNotification();
     }
+    //Xoá dữ liệu món ăn
     public void deleteDataFood(JTextField txtMaDA,JTextField txtFoodName,JTextField txtPrice,JComboBox cbType,JTextField txtLinkImage,JLabel lbImage,DefaultTableModel tableModel,JFrame frame){
         FoodDao foodData = new FoodDao();
         if (txtMaDA.getText().equals("")){
@@ -126,6 +129,7 @@ public class FoodController {
             message.showNotification();
         }
     }
+    //Cập nhật dữ liệu món ăn
     public void updateDataFood(JTextField txtMaDA,JTextField txtFoodName,JTextField txtPrice,JComboBox cbType,JTextField txtLinkImage,JLabel lbImage,DefaultTableModel tableModel,JFrame frame){
         
         if(txtFoodName.getText().equals("")||txtPrice.getText().equals("")||txtLinkImage.getText().equals("")){
@@ -155,6 +159,7 @@ public class FoodController {
         MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Cập nhập món ăn thành công!!");
         message.showNotification();
     }
+    //Thêm dữ liệu món ăn
     public void addMenuFood(JPanel menuCombo,JPanel menuChicken,JPanel menuBread,JPanel menuHamburger,JPanel menuAnotherFood,JPanel menuDrink,List<FastFoodItem> menuFood,String item){
         if(item.equals("COMBO")){ 
             for(int i = 0;i<menuFood.size();i++){
@@ -188,6 +193,7 @@ public class FoodController {
             menuDrink.revalidate();
         }
     }
+    //Hiển thị dữ liệu món ăn theo loại
     public void showMenuByType(JPanel menuCombo,JPanel menuChicken,JPanel menuBread,JPanel menuHamburger,JPanel menuAnotherFood,JPanel menuDrink,String type){
         FoodDao foodData = new FoodDao();
         List<Food> foodArray = new ArrayList<>();
@@ -198,6 +204,7 @@ public class FoodController {
         }
         addMenuFood(menuCombo,menuChicken,menuBread,menuHamburger,menuAnotherFood,menuDrink,itemArray,type);
     }
+    //Tìm món ăn 
     public void findFood(JTextField txtFindFood,JComboBox cbType,JTabbedPane tabbedMenuPane,JPanel panel){
         FoodDao foodData = new FoodDao();
         Pattern p = Pattern.compile("^[0-9]+$");

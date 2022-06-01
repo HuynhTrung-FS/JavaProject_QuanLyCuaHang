@@ -13,6 +13,7 @@ import View.Salesman.SalesmanDashboardView;
 import View.Manager.ManagerDashboardView;
 import View.MessageNotify.MessageNotify;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
@@ -100,6 +101,11 @@ public class LoginView extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
+        btnLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLoginKeyPressed(evt);
+            }
+        });
 
         btnExit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnExit.setText("THOÁT");
@@ -123,6 +129,11 @@ public class LoginView extends javax.swing.JFrame {
         jLabel7.setText("XÁC THỰC:");
 
         txtCaptcha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCaptcha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCaptchaKeyPressed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Refresh.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +310,6 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnCheckPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckPassActionPerformed
-        // TODO add your handling code here:
         if(btnCheckPass.isSelected()){
             txtPassword.setEchoChar((char)0);
         }else{
@@ -308,7 +318,6 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCheckPassActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
         LoginView login= new LoginView();
         login.setVisible(false);
         if(JOptionPane.showConfirmDialog(login,"Bạn có chắc chắc muốn thoát!" , "THOÁT", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
@@ -317,9 +326,83 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+
         lbCaptcha.setText(createCaptcha());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+            if(txtUser.getText().equals("admin") && txtPassword.getText().equals("123456")){
+                this.setVisible(false);
+                AdminDashboardView adminView = new AdminDashboardView();
+                adminView.setVisible(true);
+                return;
+            }
+            if(txtUser.getText().equals("") || txtPassword.getText().equals("")){
+                MessageNotify message = new MessageNotify(this,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_CENTER,"Không được để trống tên tài khoản và mật khẩu!!");
+                message.showNotification();
+                return;
+            }
+            SalesmanDao salesmanData = new SalesmanDao();
+            ManagerDao managerData = new ManagerDao();
+            Employee employeeSales = salesmanData.findAccount(txtUser.getText(),txtPassword.getText());
+            Employee employeeManager = managerData.findAccount(txtUser.getText(),txtPassword.getText());
+            if(employeeSales.getTaiKhoan().equals("a") && employeeSales.getMatKhau().equals("a") && employeeManager.getTaiKhoan().equals("a") && employeeManager.getMatKhau().equals("a")){
+                MessageNotify message = new MessageNotify(this,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_CENTER,"Nhân Viên nhập sai tài khoản hoặc mật khẩu!!");
+                message.showNotification();
+                return;
+            }
+            if(!employeeSales.getTaiKhoan().equals("a") && !employeeSales.getMatKhau().equals("a") && employeeSales.getChucVu() == 1){
+                this.setVisible(false);
+                SalesmanDashboardView salesmanView = new SalesmanDashboardView(employeeSales);
+                salesmanView.setVisible(true);
+                return;
+            }
+            if(!employeeManager.getTaiKhoan().equals("a") && !employeeManager.getTaiKhoan().equals("a") && employeeManager.getChucVu() == 2){
+                this.setVisible(false);
+                ManagerDashboardView managerView = new ManagerDashboardView(employeeManager);
+                managerView.setVisible(true);
+                return;
+            }
+        }
+    }//GEN-LAST:event_btnLoginKeyPressed
+
+    private void txtCaptchaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCaptchaKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER){
+            if(txtUser.getText().equals("admin") && txtPassword.getText().equals("123456")){
+                this.setVisible(false);
+                AdminDashboardView adminView = new AdminDashboardView();
+                adminView.setVisible(true);
+                return;
+            }
+            if(txtUser.getText().equals("") || txtPassword.getText().equals("")){
+                MessageNotify message = new MessageNotify(this,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_CENTER,"Không được để trống tên tài khoản và mật khẩu!!");
+                message.showNotification();
+                return;
+            }
+            SalesmanDao salesmanData = new SalesmanDao();
+            ManagerDao managerData = new ManagerDao();
+            Employee employeeSales = salesmanData.findAccount(txtUser.getText(),txtPassword.getText());
+            Employee employeeManager = managerData.findAccount(txtUser.getText(),txtPassword.getText());
+            if(employeeSales.getTaiKhoan().equals("a") && employeeSales.getMatKhau().equals("a") && employeeManager.getTaiKhoan().equals("a") && employeeManager.getMatKhau().equals("a")){
+                MessageNotify message = new MessageNotify(this,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_CENTER,"Nhân Viên nhập sai tài khoản hoặc mật khẩu!!");
+                message.showNotification();
+                return;
+            }
+            if(!employeeSales.getTaiKhoan().equals("a") && !employeeSales.getMatKhau().equals("a") && employeeSales.getChucVu() == 1){
+                this.setVisible(false);
+                SalesmanDashboardView salesmanView = new SalesmanDashboardView(employeeSales);
+                salesmanView.setVisible(true);
+                return;
+            }
+            if(!employeeManager.getTaiKhoan().equals("a") && !employeeManager.getTaiKhoan().equals("a") && employeeManager.getChucVu() == 2){
+                this.setVisible(false);
+                ManagerDashboardView managerView = new ManagerDashboardView(employeeManager);
+                managerView.setVisible(true);
+                return;
+            }
+        }
+    }//GEN-LAST:event_txtCaptchaKeyPressed
 
     /**
      * @param args the command line arguments

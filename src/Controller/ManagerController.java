@@ -36,7 +36,7 @@ public class ManagerController {
     public void showDataEmployee(DefaultTableModel a){
         List<Employee> list = new ArrayList<>();
         ManagerDao managerData = new ManagerDao();
-        list = managerData.showData();
+        list = managerData.chooseDataManager();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         a.setRowCount(0);
         for(int i =0;i<list.size();i++){
