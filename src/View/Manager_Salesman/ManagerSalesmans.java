@@ -9,7 +9,7 @@ import Dao.SalesmanDao;
 import Model.Employee.Employee;
 import View.Manager.ManagerDashboardView;
 import View.MessageNotify.MessageNotify;
-import View.Notification.NotificationCustom;
+import View.Notification.NotificationCreate;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -28,12 +28,14 @@ import javax.swing.table.DefaultTableModel;
 public class ManagerSalesmans extends javax.swing.JPanel {
     Employee employee = new Employee();
     SalesmanController controller = new SalesmanController();
+    //admin quan ly nhan vien ban hang tat ca chi nhanh
     public ManagerSalesmans(){
         initComponents();
         tableContent.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,18));
         controller.showDataSalesman((DefaultTableModel)tableContent.getModel());
         btnNotify.setVisible(false);
     }
+    //manager quan ly nhan vien ban hang theo chi nhanh
     public ManagerSalesmans(Employee employee) {
         initComponents();
         this.employee = employee;
@@ -51,6 +53,7 @@ public class ManagerSalesmans extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -64,6 +67,19 @@ public class ManagerSalesmans extends javax.swing.JPanel {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableContent = new javax.swing.JTable();
+
+        jInternalFrame1.setVisible(true);
+
+        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
+        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
+        jInternalFrame1Layout.setHorizontalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jInternalFrame1Layout.setVerticalGroup(
+            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         setLayout(new java.awt.BorderLayout());
 
@@ -81,6 +97,7 @@ public class ManagerSalesmans extends javax.swing.JPanel {
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/option.png"))); // NOI18N
         jButton1.setText("TUỲ CHỌN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,27 +147,27 @@ public class ManagerSalesmans extends javax.swing.JPanel {
                 .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(btnReset)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNotify)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnReset, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(btnFind, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbType, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnNotify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(22, 22, 22))
+                        .addComponent(btnNotify, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(20, 20, 20))
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.PAGE_START);
@@ -159,13 +176,13 @@ public class ManagerSalesmans extends javax.swing.JPanel {
 
         tableContent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Họ Tên", "Ngày Sinh", "Giới Tính", "Địa Chỉ", "CMND(CCCD)", "SĐT", "Ngày Vào Làm", "Link Ảnh", "Lương", "Tài Khoản", "Mật Khẩu", "ChiNhanh"
+                "ID", "Họ Tên", "Ngày Sinh", "Giới Tính", "Địa Chỉ", "CMND(CCCD)", "SĐT", "Email", "Ngày Vào Làm", "Link Ảnh", "Lương", "Tài Khoản", "Mật Khẩu", "ChiNhanh"
             }
         ));
         tableContent.setRowHeight(30);
@@ -186,8 +203,8 @@ public class ManagerSalesmans extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnNotifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotifyActionPerformed
-        // TODO add your handling code here:
-        NotificationCustom a = new NotificationCustom(this.employee);
+
+        NotificationCreate a = new NotificationCreate(this.employee.getMaNV());
         a.setVisible(true);
         a.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnNotifyActionPerformed
@@ -217,6 +234,7 @@ public class ManagerSalesmans extends javax.swing.JPanel {
     private javax.swing.JButton btnReset;
     private javax.swing.JComboBox<String> cbType;
     private javax.swing.JButton jButton1;
+    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;

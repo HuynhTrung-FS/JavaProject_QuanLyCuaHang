@@ -11,12 +11,12 @@ import java.awt.GridLayout;
  *
  * @author ADMIN
  */
-public class SalesmanFoodCar extends javax.swing.JPanel {
+public class SalesmanFoodCard extends javax.swing.JPanel {
 
     /**
      * Creates new form Table
      */
-    public SalesmanFoodCar() {
+    public SalesmanFoodCard() {
         initComponents();        
         excute();
     }

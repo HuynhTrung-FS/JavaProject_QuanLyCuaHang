@@ -10,6 +10,7 @@ import View.Manager_Salesman.ManagerSalesmans;
 import View.Item.MenuItem;
 import View.Login.LoginView;
 import View.MessageNotify.MessageNotify;
+import View.Notification.NotificationManagers;
 import View.Notification.NotificationView;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -29,23 +30,23 @@ import javax.swing.JPanel;
  */
 public class ManagerDashboardView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ManagerDashboardView
-     */
-    public ManagerDashboardView() {
-        initComponents();
-         MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công");
-        a.showNotification();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        excute(null);
-        setIcon();
-        
-    }
+    JPanel panel1 = this.panelBody;
+    Employee employee = new Employee();
+//    public ManagerDashboardView() {
+//        initComponents();
+//        MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công");
+//        a.showNotification();
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        excute(null);
+//        setIcon();
+//        
+//    }
      public ManagerDashboardView(Employee employee) {
         initComponents();
         MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công");
         a.showNotification();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.employee = employee;
         excute(employee);
         setIcon();
         txtGreeting.setText("Xin Chào, " + employee.getTenNV());
@@ -59,6 +60,7 @@ public class ManagerDashboardView extends javax.swing.JFrame {
         ImageIcon iconManagerEmployees = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/ManagerEmployee.png"));
         ImageIcon iconMenuFastFood = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/MenuFood.png"));
         ImageIcon iconSalesStatistics = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Statistics.png"));
+        ImageIcon iconNotification = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/iconNotification.png"));
         //Create menuDashboard
         MenuItem menuPersonalInfo = new MenuItem(iconPersonalInfo,"Thông Tin Cá Nhân",new ActionListener(){
             @Override
@@ -79,6 +81,16 @@ public class ManagerDashboardView extends javax.swing.JFrame {
                 panelBody.revalidate();
             }
         });
+        MenuItem menuNotification= new MenuItem(iconNotification,"Quản Lý Thông Báo",new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                panelBody.removeAll();
+                panelBody.add(new NotificationManagers(employee.getChiNhanh()));
+                panelBody.repaint();
+                panelBody.revalidate();
+                
+            }
+        });
         MenuItem menuFood = new MenuItem(iconMenuFastFood,"Menu",new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae){
@@ -97,7 +109,7 @@ public class ManagerDashboardView extends javax.swing.JFrame {
                 panelBody.revalidate();
             }
         });
-        addMenu(menuPersonalInfo,menuEmployees,menuFood,menuSalesStatistics);
+        addMenu(menuPersonalInfo,menuEmployees,menuFood,menuNotification,menuSalesStatistics);
     }
     private void addMenu(MenuItem... menu){
         for(int i=0; i<menu.length ;i++){
@@ -133,8 +145,8 @@ public class ManagerDashboardView extends javax.swing.JFrame {
     private void initComponents() {
 
         panelHeader = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lbImage = new javax.swing.JLabel();
+        lbNameStore = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         panelMenu = new javax.swing.JPanel();
@@ -150,12 +162,12 @@ public class ManagerDashboardView extends javax.swing.JFrame {
         panelHeader.setBackground(new java.awt.Color(54, 33, 89));
         panelHeader.setPreferredSize(new java.awt.Dimension(871, 100));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/logoSmall.png"))); // NOI18N
+        lbImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/logoSmall.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Snap ITC", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("3T FAST FOOD");
-        jLabel2.setPreferredSize(new java.awt.Dimension(219, 32));
+        lbNameStore.setFont(new java.awt.Font("Snap ITC", 1, 24)); // NOI18N
+        lbNameStore.setForeground(new java.awt.Color(255, 255, 255));
+        lbNameStore.setText("3T FAST FOOD");
+        lbNameStore.setPreferredSize(new java.awt.Dimension(219, 32));
 
         jButton1.setBackground(new java.awt.Color(54, 33, 89));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/bell.png"))); // NOI18N
@@ -181,9 +193,9 @@ public class ManagerDashboardView extends javax.swing.JFrame {
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addComponent(jLabel1)
+                .addComponent(lbImage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbNameStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1002, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -194,14 +206,14 @@ public class ManagerDashboardView extends javax.swing.JFrame {
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(panelHeaderLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbNameStore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -295,7 +307,7 @@ public class ManagerDashboardView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManagerDashboardView().setVisible(true);
+//                new ManagerDashboardView().setVisible(true);
             }
         });
     }
@@ -303,10 +315,10 @@ public class ManagerDashboardView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbImage;
+    private javax.swing.JLabel lbNameStore;
     private javax.swing.JPanel menusPanel;
     public javax.swing.JPanel panelBody;
     private javax.swing.JPanel panelHeader;

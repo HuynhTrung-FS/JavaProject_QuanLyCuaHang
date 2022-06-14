@@ -16,8 +16,26 @@ public class Notification {
     private int maTB;
     private String tieuDe;
     private String noiDung;
-    private Date ngayTao;
-    private int chucVu;
+    private String ngayTao;
+    private int maNguoiTao;
+    private String tenQuanLy;
+
+    public String getTenQuanLy() {
+        return tenQuanLy;
+    }
+
+    public void setTenQuanLy(String tenQuanLy) {
+        this.tenQuanLy = tenQuanLy;
+    }
+
+    public int getMaNguoiTao() {
+        return maNguoiTao;
+    }
+
+    public void setMaNguoiTao(int maNguoiTao) {
+        this.maNguoiTao = maNguoiTao;
+    }
+
     
     public int getMaTB() {
         return maTB;
@@ -61,29 +79,14 @@ public class Notification {
     /**
      * @return the ngayTao
      */
-    public Date getNgayTao() {
+    public String getNgayTao() {
         return ngayTao;
     }
 
     /**
      * @param ngayTao the ngayTao to set
      */
-    public void setNgayTao(Date ngayTao) {
+    public void setNgayTao(String ngayTao) {
         this.ngayTao = ngayTao;
     }
-
-    /**
-     * @return the chucVu
-     */
-    public int getChucVu() {
-        return chucVu;
-    }
-
-    /**
-     * @param chucVu the chucVu to set
-     */
-    public void setChucVu(int chucVu) {
-        this.chucVu = chucVu;
-    }
-    
 }

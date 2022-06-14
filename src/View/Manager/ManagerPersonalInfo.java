@@ -140,11 +140,6 @@ public class ManagerPersonalInfo extends javax.swing.JPanel {
         jLabel5.setText("CMND(CCCD):");
 
         txtCMND.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtCMND.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCMNDActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 0, 51));
@@ -158,10 +153,10 @@ public class ManagerPersonalInfo extends javax.swing.JPanel {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ĐỔI MẬT KHẨU", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jLabel9.setText("Mật Khẩu Cũ: ");
+        jLabel9.setText("Mật Khẩu Cũ : ");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jLabel10.setText("Mật Khẩu Mới:");
+        jLabel10.setText("Mật Khẩu Mới :");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jLabel11.setText("Xác Nhận Mật Khẩu Mới:");
@@ -277,7 +272,7 @@ public class ManagerPersonalInfo extends javax.swing.JPanel {
                 .addComponent(calendarCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -343,10 +338,6 @@ public class ManagerPersonalInfo extends javax.swing.JPanel {
             txtNewPassAgain.setEchoChar('*');
         }
     }//GEN-LAST:event_btnShowPassActionPerformed
-
-    private void txtCMNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCMNDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCMNDActionPerformed
 
     private void btnVerifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerifyActionPerformed
         ManagerController controller = new ManagerController();

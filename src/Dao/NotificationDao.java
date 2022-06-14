@@ -19,15 +19,16 @@ import java.util.List;
  * @author ADMIN
  */
 public class NotificationDao {
-    //Thêm dữ liệu thông báo cho nhân viên bán hàng nếu chucvu là 1, nhân viên quản lý nếu chucvu là 2
-    public void insertNotificationSalesman(Notification data,int chucVu) {
-        String sql = "insert into MENU(TieuDe,NoiDung,NgayTao,ChucVu) values (?,?,?,?)";
+    //Thêm dữ liệu thông báo của mã người tạo,manv là 0 nếu là admin, nhân viên quản lý sẽ là maNV 
+    public void insertNotification(Notification data,int maNV) {
+        String sql = "insert into BANGTHONGBAO(TieuDe,NoiDung,NgayTao,MaNguoiTao) values (?,?,?,?)";
         try { 
             Connection conn = DataConnect.openConnect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, data.getTieuDe());
             pstmt.setString(2, data.getNoiDung());
-            pstmt.setDate(3, new java.sql.Date(data.getNgayTao().getTime()));
+            pstmt.setString(3, data.getNgayTao());
+            pstmt.setInt(4, maNV);
             pstmt.executeUpdate();
             pstmt.close();
             conn.close();            
@@ -37,10 +38,10 @@ public class NotificationDao {
             ex.printStackTrace();
         }   
     } 
-    //hiển thị dữ liệu thông báo
-    public List<Notification> chooseData(int chucVu){
+    //chọn dữ liệu thông báo đã tạo của admin 
+    public List<Notification> chooseNotificationForManager(){
         List<Notification> dataList = new ArrayList<>();
-        String sql = "select TieuDe,NoiDung,NgayTao,ChucVu from BANGTHONGBAO Where ChucVu = '"+ chucVu +"'";
+        String sql = "select MaTB,TieuDe,NoiDung,NgayTao,MaNguoiTao from BANGTHONGBAO where MaNguoiTao = 0";
         try
         {
             Connection conn = DataConnect.openConnect();
@@ -48,11 +49,11 @@ public class NotificationDao {
             ResultSet result = state.executeQuery(sql);
             while(result.next()){
                 Notification notification = new Notification();
-                notification.setTieuDe(result.getString(1));
-                notification.setNoiDung(result.getString(2));
-                java.sql.Date dateCreate = result.getDate(3);
-                notification.setNgayTao(new Date(dateCreate.getTime())); 
-                notification.setChucVu(result.getInt(4));
+                notification.setMaTB(result.getInt(1));
+                notification.setTieuDe(result.getString(2));
+                notification.setNoiDung(result.getString(3));
+                notification.setNgayTao(result.getString(4)); 
+                notification.setMaNguoiTao(result.getInt(5));
                 dataList.add(notification);
             }
             state.close();
@@ -64,14 +65,41 @@ public class NotificationDao {
         }
         return dataList;
     } 
-    //Xoá dữ liệu thông báo
-    public void delete(int maTB,int chucVu){
+    //chọn dữ liệu thông báo đã tạo của nhân viên quản lý 
+    public List<Notification> chooseNotificationForEmployee(int chiNhanh){
+        List<Notification> dataList = new ArrayList<>();
+        String sql = "select MaTB,TieuDe,NoiDung,NgayTao,MaNguoiTao,TenNV from BANGTHONGBAO join NHANVIEN on BANGTHONGBAO.MaNguoiTao = NHANVIEN.MaNV Where  ChiNhanh = "+ chiNhanh+"";
+        try
+        {
+            Connection conn = DataConnect.openConnect();
+            Statement state = conn.createStatement();
+            ResultSet result = state.executeQuery(sql);
+            while(result.next()){
+                Notification notification = new Notification();
+                notification.setMaTB(result.getInt(1));
+                notification.setTieuDe(result.getString(2));
+                notification.setNoiDung(result.getString(3));
+                notification.setNgayTao(result.getString(4)); 
+                notification.setMaNguoiTao(result.getInt(5));
+                notification.setTenQuanLy(result.getString(6));
+                dataList.add(notification);
+            }
+            state.close();
+            conn.close();            
+        }catch (ClassNotFoundException ex) {  
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return dataList;
+    } 
+    //Xoá dữ liệu thông báo ( quyền của admin, quyền cua nhân viên quản lý)
+    public void deleteNotification(int maTB){
         try {
-            String sql = "delete from BANGTHONGBAO where MaTB = ? and ChucVu = ?";
+            String sql = "delete from BANGTHONGBAO where MaTB = ?";
             Connection conn = DataConnect.openConnect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, maTB);
-            pstmt.setInt(2, chucVu);
             pstmt.executeUpdate();
             pstmt.close();   
             conn.close();
@@ -81,17 +109,16 @@ public class NotificationDao {
             ex.printStackTrace();
         }
     } 
-    //
-    public void updateNotificationManager(Notification data,int check){
+    //Cập nhật dữ liệu thông báo
+    public void updateNotification(Notification data){
         try {
-            String sql = "update BANGTHONGBAO set TieuDe = ?,NoiDung = ?,NgayTao = ? where MaTB = ? and ChucVu = ?";
+            String sql = "update BANGTHONGBAO set TieuDe = ?,NoiDung = ?,NgayTao = ? where MaTB = ?";
             Connection conn = DataConnect.openConnect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, data.getTieuDe());
             pstmt.setString(2, data.getNoiDung());
-            pstmt.setDate(3, new java.sql.Date(data.getNgayTao().getTime()));
+            pstmt.setString(3, data.getNgayTao());
             pstmt.setInt(4, data.getMaTB());
-            pstmt.setInt(5, check);
             pstmt.executeUpdate();
             pstmt.close();        
             conn.close();

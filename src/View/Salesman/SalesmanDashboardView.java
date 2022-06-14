@@ -32,20 +32,22 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
     /**
      * Creates new form EmployDashboardView
      */
-    public SalesmanDashboardView() {
-        initComponents();
-        MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công!!");
-        a.showNotification();
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //excute();
-        setIcon();
-    }
+    Employee employee = new Employee();
+//    public SalesmanDashboardView() {
+//        initComponents();
+//        MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công!!");
+//        a.showNotification();
+//        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        //excute();
+//        setIcon();
+//    }
     public SalesmanDashboardView(Employee employee) {
         initComponents();
         MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công!!");
         a.showNotification();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         excute(employee);
+        this.employee = employee;
         setIcon();
         lbGreeting.setText("Xin Chào, " + employee.getTenNV());
     }
@@ -120,7 +122,7 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae){
                 panelBody.removeAll();
-                panelBody.add(new SalesmanFoodCar());
+                panelBody.add(new SalesmanFoodCard());
                 panelBody.repaint();
                 panelBody.revalidate();
             }
@@ -281,7 +283,7 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        NotificationView a = new NotificationView();
+        NotificationView a = new NotificationView(this.employee.getChiNhanh());
         a.setVisible(true);
         a.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -319,8 +321,8 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SalesmanDashboardView a = new SalesmanDashboardView();
-                a.setVisible(true);
+//                SalesmanDashboardView a = new SalesmanDashboardView();
+//                a.setVisible(true);
             }
         });
     }

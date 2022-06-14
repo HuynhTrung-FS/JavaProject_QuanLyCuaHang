@@ -61,6 +61,7 @@ public class Employee {
     private String SDT;
     private String diaChi;
     private String gioiTinh;
+    private String email;
     private String soCMND;
     private Date ngaySinh;
     private Date ngayVaoLam;
@@ -89,6 +90,16 @@ public class Employee {
     public Employee() {
         
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
     
     
      public int getMaNV() {

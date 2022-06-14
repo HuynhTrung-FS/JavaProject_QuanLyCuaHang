@@ -24,7 +24,7 @@ import java.util.List;
 public class ManagerDao {
     //Thêm dữ liệu nhân viên quản lý
     public void insert(Employee data) {
-        String sql = "insert into NHANVIEN(ChucVu,TenNV,CMND,SDT,DiaChi,GioiTinh,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh) values (2,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into NHANVIEN(ChucVu,TenNV,CMND,SDT,DiaChi,GioiTinh,Email,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh) values (2,?,?,?,?,?,?,?,?,?,?,?,?)";
         try { 
             Connection conn = DataConnect.openConnect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -33,13 +33,14 @@ public class ManagerDao {
             pstmt.setString(3, data.getSDT());
             pstmt.setString(4, data.getDiaChi());
             pstmt.setString(5, data.getGioiTinh()); 
-            pstmt.setDate(6, new java.sql.Date(data.getNgaySinh().getTime())); 
-            pstmt.setDate(7, new java.sql.Date(data.getNgayVaoLam().getTime()));
-            pstmt.setString(8, data.getHinhAnhNV());
-            pstmt.setFloat(9, data.getLuongCB());
-            pstmt.setString(10, data.getTaiKhoan());
-            pstmt.setString(11, data.getMatKhau());
-            pstmt.setInt(12,data.getChiNhanh());
+            pstmt.setString(6, data.getEmail());
+            pstmt.setDate(7, new java.sql.Date(data.getNgaySinh().getTime())); 
+            pstmt.setDate(8, new java.sql.Date(data.getNgayVaoLam().getTime()));
+            pstmt.setString(9, data.getHinhAnhNV());
+            pstmt.setFloat(10, data.getLuongCB());
+            pstmt.setString(11, data.getTaiKhoan());
+            pstmt.setString(12, data.getMatKhau());
+            pstmt.setInt(13,data.getChiNhanh());
             pstmt.executeUpdate();
             pstmt.close();
             conn.close();            
@@ -50,47 +51,10 @@ public class ManagerDao {
         }
         
     } 
-    //Chọn tất cả dữ liệu trong nhân viên
-    public List<Employee> chooseFullData(){
-        List<Employee> dataList = new ArrayList<>();
-        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN";
-        try
-        {
-            Connection conn = DataConnect.openConnect();
-            Statement state = conn.createStatement();
-            ResultSet result = state.executeQuery(sql);
-            while(result.next()){
-                Employee employee = new Employee();
-                employee.setMaNV(result.getInt(1));
-                employee.setTenNV(result.getString(2));
-                employee.setCMND(result.getString(3));
-                employee.setSDT(result.getString(4));
-                employee.setDiaChi(result.getString(5));
-                employee.setGioiTinh(result.getString(6));
-                java.sql.Date dateBirth = result.getDate(7);
-                employee.setNgaySinh(new Date(dateBirth.getTime()));  
-                java.sql.Date dateWork = result.getDate(8);
-                employee.setNgayVaoLam(new Date(dateWork.getTime()));
-                employee.setHinhAnhNV(result.getString(9));
-                employee.setLuongCB(result.getFloat(10));
-                employee.setTaiKhoan(result.getString(11));
-                employee.setMatKhau(result.getString(12));
-                employee.setChiNhanh(result.getInt(13));
-                dataList.add(employee);
-            }
-            state.close();
-            conn.close();            
-        }catch (ClassNotFoundException ex) {  
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return dataList;
-    }
     //hiển thị dữ liệu nhân viên quản lý
     public List<Employee> chooseDataManager(){
         List<Employee> dataList = new ArrayList<>();
-        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN Where ChucVu = 2";
+        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,Email,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN Where ChucVu = 2";
         try
         {
             Connection conn = DataConnect.openConnect();
@@ -104,15 +68,16 @@ public class ManagerDao {
                 employee.setSDT(result.getString(4));
                 employee.setDiaChi(result.getString(5));
                 employee.setGioiTinh(result.getString(6));
-                java.sql.Date dateBirth = result.getDate(7);
+                employee.setEmail(result.getString(7));
+                java.sql.Date dateBirth = result.getDate(8);
                 employee.setNgaySinh(new Date(dateBirth.getTime()));  
-                java.sql.Date dateWork = result.getDate(8);
+                java.sql.Date dateWork = result.getDate(9);
                 employee.setNgayVaoLam(new Date(dateWork.getTime()));
-                employee.setHinhAnhNV(result.getString(9));
-                employee.setLuongCB(result.getFloat(10));
-                employee.setTaiKhoan(result.getString(11));
-                employee.setMatKhau(result.getString(12));
-                employee.setChiNhanh(result.getInt(13));
+                employee.setHinhAnhNV(result.getString(10));
+                employee.setLuongCB(result.getFloat(11));
+                employee.setTaiKhoan(result.getString(12));
+                employee.setMatKhau(result.getString(13));
+                employee.setChiNhanh(result.getInt(14));
                 dataList.add(employee);
             }
             state.close();
@@ -143,7 +108,7 @@ public class ManagerDao {
     //Cập nhật dữ liệu nhân viên quản lý
     public void update(Employee data){
         try {
-            String sql = "update NHANVIEN set TenNV = ?,CMND = ?,SDT = ?,DiaChi = ?,GioiTinh = ?,NgaySinh = ?,NgayVaoLam = ?,HinhAnhNV = ?,LuongCB = ?,TaiKhoan = ?,MatKhau = ?,ChiNhanh =? where MaNV = ? ";
+            String sql = "update NHANVIEN set TenNV = ?,CMND = ?,SDT = ?,DiaChi = ?,GioiTinh = ?,Email =?,NgaySinh = ?,NgayVaoLam = ?,HinhAnhNV = ?,LuongCB = ?,TaiKhoan = ?,MatKhau = ?,ChiNhanh =? where MaNV = ? ";
             Connection conn = DataConnect.openConnect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, data.getTenNV());
@@ -151,14 +116,15 @@ public class ManagerDao {
             pstmt.setString(3, data.getSDT());
             pstmt.setString(4, data.getDiaChi());
             pstmt.setString(5, data.getGioiTinh());
-            pstmt.setDate(6, new java.sql.Date(data.getNgaySinh().getTime())); 
-            pstmt.setDate(7, new java.sql.Date(data.getNgayVaoLam().getTime()));
-            pstmt.setString(8, data.getHinhAnhNV());
-            pstmt.setFloat(9, data.getLuongCB());
-            pstmt.setString(10, data.getTaiKhoan());
-            pstmt.setString(11, data.getMatKhau());
-            pstmt.setInt(12, data.getChiNhanh());
-            pstmt.setInt(13, data.getMaNV());
+            pstmt.setString(6, data.getEmail());
+            pstmt.setDate(7, new java.sql.Date(data.getNgaySinh().getTime())); 
+            pstmt.setDate(8, new java.sql.Date(data.getNgayVaoLam().getTime()));
+            pstmt.setString(9, data.getHinhAnhNV());
+            pstmt.setFloat(10, data.getLuongCB());
+            pstmt.setString(11, data.getTaiKhoan());
+            pstmt.setString(12, data.getMatKhau());
+            pstmt.setInt(13, data.getChiNhanh());
+            pstmt.setInt(14, data.getMaNV());
             pstmt.executeUpdate();
             pstmt.close();        
             conn.close();
@@ -173,7 +139,7 @@ public class ManagerDao {
         List<Employee> dataList = new ArrayList<>();
         ResultSet result = null;
         PreparedStatement pstmt = null;
-        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN where MaNV = ? and ChucVu = 2";
+        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,Email,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN where MaNV = ? and ChucVu = 2";
         try {
             Connection conn = DataConnect.openConnect();
             pstmt = conn.prepareStatement(sql);
@@ -187,15 +153,16 @@ public class ManagerDao {
                 employee.setSDT(result.getString(4));
                 employee.setDiaChi(result.getString(5));
                 employee.setGioiTinh(result.getString(6));
-                java.sql.Date dateBirth = result.getDate(7);
+                employee.setEmail(result.getString(7));
+                java.sql.Date dateBirth = result.getDate(8);
                 employee.setNgaySinh(new Date(dateBirth.getTime()));
-                java.sql.Date dateWork = result.getDate(8);
+                java.sql.Date dateWork = result.getDate(9);
                 employee.setNgayVaoLam(new Date(dateWork.getTime()));
-                employee.setHinhAnhNV(result.getString(9));
-                employee.setLuongCB(result.getFloat(10));
-                employee.setTaiKhoan(result.getString(11));
-                employee.setMatKhau(result.getString(12));
-                employee.setChiNhanh(result.getInt(13));
+                employee.setHinhAnhNV(result.getString(10));
+                employee.setLuongCB(result.getFloat(11));
+                employee.setTaiKhoan(result.getString(12));
+                employee.setMatKhau(result.getString(13));
+                employee.setChiNhanh(result.getInt(14));
                 dataList.add(employee);
             }
             pstmt.close();
@@ -212,7 +179,7 @@ public class ManagerDao {
         List<Employee> dataList = new ArrayList<>();
         ResultSet result = null;
         Statement stm = null;
-        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN where TenNV = N'" + name + "' and ChucVu = 2";
+        String sql = "select MaNV,TenNV,CMND,SDT,DiaChi,GioiTinh,Email,NgaySinh,NgayVaoLam,HinhAnhNV,LuongCB,TaiKhoan,MatKhau,ChiNhanh from NHANVIEN where TenNV = N'" + name + "' and ChucVu = 2";
         try {
             Connection conn = DataConnect.openConnect();
             stm = conn.createStatement();
@@ -225,15 +192,16 @@ public class ManagerDao {
                 employee.setSDT(result.getString(4));
                 employee.setDiaChi(result.getString(5));
                 employee.setGioiTinh(result.getString(6));
-                java.sql.Date dateBirth = result.getDate(7);
+                employee.setEmail(result.getString(7));
+                java.sql.Date dateBirth = result.getDate(8);
                 employee.setNgaySinh(new Date(dateBirth.getTime()));
-                java.sql.Date dateWork = result.getDate(8);
+                java.sql.Date dateWork = result.getDate(9);
                 employee.setNgayVaoLam(new Date(dateWork.getTime()));
-                employee.setHinhAnhNV(result.getString(9));
-                employee.setLuongCB(result.getFloat(10));
-                employee.setTaiKhoan(result.getString(11));
-                employee.setMatKhau(result.getString(12));
-                employee.setChiNhanh(result.getInt(13));
+                employee.setHinhAnhNV(result.getString(10));
+                employee.setLuongCB(result.getFloat(11));
+                employee.setTaiKhoan(result.getString(12));
+                employee.setMatKhau(result.getString(13));
+                employee.setChiNhanh(result.getInt(14));
                 dataList.add(employee);
             }
             stm.close();
@@ -265,16 +233,17 @@ public class ManagerDao {
                 employee.setSDT(result.getString(5));
                 employee.setDiaChi(result.getString(6));
                 employee.setGioiTinh(result.getString(7));
-                java.sql.Date dateBirth = result.getDate(8);
+                employee.setEmail(result.getString(8));
+                java.sql.Date dateBirth = result.getDate(9);
                 employee.setNgaySinh(new Date(dateBirth.getTime()));
-                java.sql.Date dateWork = result.getDate(9);
+                java.sql.Date dateWork = result.getDate(10);
                 employee.setNgayVaoLam(new Date(dateWork.getTime()));
-                employee.setHinhAnhNV(result.getString(10));
-                employee.setLuongCB(result.getFloat(11));
-                employee.setTaiKhoan(result.getString(12));
-                employee.setMatKhau(result.getString(13));
-                employee.setLichLamViec(result.getString(14));
-                employee.setChiNhanh(result.getInt(15));
+                employee.setHinhAnhNV(result.getString(11));
+                employee.setLuongCB(result.getFloat(12));
+                employee.setTaiKhoan(result.getString(13));
+                employee.setMatKhau(result.getString(14));
+                employee.setLichLamViec(result.getString(15));
+                employee.setChiNhanh(result.getInt(16));
                 pstmt.close();
                 conn.close();
                 return employee;   
@@ -314,16 +283,17 @@ public class ManagerDao {
                 employee.setSDT(result.getString(5));
                 employee.setDiaChi(result.getString(6));
                 employee.setGioiTinh(result.getString(7));
-                java.sql.Date dateBirth = result.getDate(8);
+                employee.setEmail(result.getString(8));
+                java.sql.Date dateBirth = result.getDate(9);
                 employee.setNgaySinh(new Date(dateBirth.getTime()));
-                java.sql.Date dateWork = result.getDate(9);
+                java.sql.Date dateWork = result.getDate(10);
                 employee.setNgayVaoLam(new Date(dateWork.getTime()));
-                employee.setHinhAnhNV(result.getString(10));
-                employee.setLuongCB(result.getFloat(11));
-                employee.setTaiKhoan(result.getString(12));
-                employee.setMatKhau(result.getString(13));
-                employee.setLichLamViec(result.getString(14));
-                employee.setChiNhanh(result.getInt(15));
+                employee.setHinhAnhNV(result.getString(11));
+                employee.setLuongCB(result.getFloat(12));
+                employee.setTaiKhoan(result.getString(13));
+                employee.setMatKhau(result.getString(14));
+                employee.setLichLamViec(result.getString(15));
+                employee.setChiNhanh(result.getInt(16));
                 dataList.add(employee);
             }
             pstmt.close();

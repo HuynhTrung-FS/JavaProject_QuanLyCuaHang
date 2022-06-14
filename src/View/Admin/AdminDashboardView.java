@@ -7,7 +7,7 @@ package View.Admin;
 
 import Model.Employee.Employee;
 import View.Admin_Managers.AdminManagers;
-import View.Salesman.SalesmanFoodCar;
+import View.Salesman.SalesmanFoodCard;
 import View.Salesman.SalesmanMenuFastFood;
 import View.Salesman.SalesmanPersonalInfo;
 import View.Salesman.OfflineOrder;
@@ -16,6 +16,7 @@ import View.Item.MenuItem;
 import View.Login.LoginView;
 import View.Manager_Salesman.ManagerSalesmans;
 import View.MessageNotify.MessageNotify;
+import View.Notification.NotificationManagers;
 import View.Statistics.SalesStatistics;
 import java.awt.Color;
 import java.awt.Component;
@@ -67,6 +68,7 @@ public class AdminDashboardView extends javax.swing.JFrame {
         ImageIcon iconManager = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Managers.png"));
         ImageIcon iconStatistics = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Statistics.png"));
         /*ImageIcon iconNext = new ImageIcon(getClass().getResource("/Image/image6.png"));*/
+        ImageIcon iconNotification = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/iconNotification.png"));
         //Create subMenu Order
         MenuItem menuEmployee = new MenuItem(iconEmployee,"Nhân Viên Bán Hàng",new ActionListener(){
             @Override
@@ -89,6 +91,16 @@ public class AdminDashboardView extends javax.swing.JFrame {
                 
             }
         });
+        MenuItem menuNotification= new MenuItem(iconNotification,"Quản Lý Thông Báo",new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                panelBody.removeAll();
+                panelBody.add(new NotificationManagers());
+                panelBody.repaint();
+                panelBody.revalidate();
+                
+            }
+        });
         MenuItem menuHuman = new MenuItem(iconHuman,"Quản Lý Nhân Sự",null,menuEmployee,menuManager);
         MenuItem menuStatistics= new MenuItem(iconStatistics,"Statistics",new ActionListener(){
             @Override
@@ -100,7 +112,7 @@ public class AdminDashboardView extends javax.swing.JFrame {
                 
             }
         });
-        addMenu(menuHuman,menuStatistics);
+        addMenu(menuHuman,menuNotification,menuStatistics);
     }
     private void addMenu(MenuItem... menu){
         for(int i=0; i<menu.length;i++){

@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 
 /**
  *
@@ -30,7 +31,7 @@ public class OrderFoodCustom extends javax.swing.JFrame {
     private void setIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/Dashboard/Image/logoSmall.png")));
     }
-    private float Tong = 0;
+    public float sum = 0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,16 +179,15 @@ public class OrderFoodCustom extends javax.swing.JFrame {
         OrderFoodItem item1 = new OrderFoodItem("Món 1",7);
         
         OrderFoodItem item2 = new OrderFoodItem("Món 2",10);
-        addOrder(item1,item2);
-        
+        arr.add(item2);
+        arr.add(item1);
+        addOrder(arr);
     }
-    private void addOrder(OrderFoodItem... itemOrder){
+    private void addOrder(List<OrderFoodItem> itemOrder){
         
-        for(int i = 0;i< itemOrder.length;i++){
-            menuOrder.add(itemOrder[i]);
-            Tong = Tong + itemOrder[i].getTong();
+        for(int i = 0;i< itemOrder.size();i++){
+            menuOrder.add(itemOrder.get(i));
         }
-        
         menuOrder.revalidate();
     }
     private void sum(){
@@ -246,7 +246,7 @@ public class OrderFoodCustom extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    public javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -254,7 +254,7 @@ public class OrderFoodCustom extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel lbSumPrice;
+    public javax.swing.JLabel lbSumPrice;
     private javax.swing.JPanel menuOrder;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JPanel panelbody;

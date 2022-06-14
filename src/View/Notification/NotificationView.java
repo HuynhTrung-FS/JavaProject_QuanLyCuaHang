@@ -4,6 +4,7 @@
  */
 package View.Notification;
 
+import Controller.NotificationController;
 import View.Item.NotificationItem;
 import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
@@ -20,31 +21,23 @@ public class NotificationView extends javax.swing.JFrame {
      */
     public NotificationView() {
         initComponents();
-        excute();
+        excuteForManager();
+        setIcon();
+    }
+    public NotificationView(int branch) {
+        initComponents();
+        excuteForSalesman(branch);
         setIcon();
     }
     private void setIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/Dashboard/Image/logoSmall.png")));
     }
-    private void excute(){
-        //Date hiện tại 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-        Date current = new Date();
-        
-        NotificationItem a = new NotificationItem("Tieu de la 1 thu quai quy","Cuộc sống là bể khroor",formatter.format(current).toString());
-        addMenu(a);
-        NotificationItem b = new NotificationItem("thong bao nay khong danh cho nguoi khong biet chu","cuôc dời là nhưng niềm dâu",formatter.format(current).toString());
-        addMenu(b);
-        NotificationItem c = new NotificationItem("Tieu de la 1 thu quai quy","Vâng ádas dá dá ",formatter.format(current).toString());
-        addMenu(c);
-        NotificationItem d = new NotificationItem("Tieu de la 1 thu quai quy","vdfdsfdsfsdfsdf njj",formatter.format(current).toString());
-        addMenu(d);
-    }
-    private void addMenu(NotificationItem... menuNotification){
-        for(int i =0;i<menuNotification.length;i++){
-            menusNotification.add(menuNotification[i]);
-        }
-        menusNotification.revalidate();
+    NotificationController controller = new NotificationController();
+    private void excuteForManager(){
+        controller.showListNotificationForManager(menusNotification);
+    } 
+    private void excuteForSalesman(int branch){
+        controller.showListNotificationForSalesman(menusNotification,branch);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,7 +49,6 @@ public class NotificationView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -67,11 +59,9 @@ public class NotificationView extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(653, 50));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/notification.png"))); // NOI18N
-        jPanel1.add(jLabel2);
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/notification.png"))); // NOI18N
         jLabel1.setText("THÔNG BÁO");
         jPanel1.add(jLabel1);
 
@@ -84,7 +74,7 @@ public class NotificationView extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,14 +119,13 @@ public class NotificationView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NotificationView().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;

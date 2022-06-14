@@ -17,7 +17,6 @@ import javax.swing.JLabel;
  * @author ADMIN
  */
 public class FastFoodItem extends javax.swing.JPanel {
-    private ActionListener act;
     public void updateLabelImage(String path,JLabel lbImage) {
         ImageIcon icon = new ImageIcon(path);
         if(icon != null){
@@ -36,6 +35,7 @@ public class FastFoodItem extends javax.swing.JPanel {
     public FastFoodItem(Food food) {
         initComponents();
         lbNameFood.setText(food.getTenThucAn());
+        lbPrice.setText(String.valueOf(food.getGiaThucAn()));
         updateLabelImage(food.getHinhAnhThucAn(),lbIconFood);
     }
 
@@ -50,7 +50,7 @@ public class FastFoodItem extends javax.swing.JPanel {
 
         lbIconFood = new javax.swing.JLabel();
         lbNameFood = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbPrice = new javax.swing.JLabel();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
@@ -61,9 +61,10 @@ public class FastFoodItem extends javax.swing.JPanel {
         lbNameFood.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbNameFood.setText("ĐỒ ĂN ....");
 
-        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("SỐ LƯỢNG ....");
+        lbPrice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lbPrice.setForeground(new java.awt.Color(51, 51, 255));
+        lbPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbPrice.setText("SỐ LƯỢNG ....");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -72,7 +73,7 @@ public class FastFoodItem extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(lbNameFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbIconFood, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)))
@@ -86,16 +87,16 @@ public class FastFoodItem extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbIconFood, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lbIconFood;
     private javax.swing.JLabel lbNameFood;
+    private javax.swing.JLabel lbPrice;
     // End of variables declaration//GEN-END:variables
 
 }

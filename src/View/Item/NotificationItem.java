@@ -4,8 +4,13 @@
  */
 package View.Item;
 
+import Controller.NotificationController;
+import Model.Notification.Notification;
 import View.Notification.NotificationContent;
 import java.awt.Dimension;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,12 +22,35 @@ public class NotificationItem extends javax.swing.JPanel {
      * Creates new form NotificationItem
      */
     private String content;
-    public NotificationItem(String title,String content, String date) {
+    int maTB;
+    Notification notification;
+    int flag = 0;
+    public NotificationItem(Notification notification,int maTB){
         initComponents();
-        lbTitle.setText(title);
-        lbDate.setText(date);
-        this.content = content;
+        lbTitle.setText(notification.getTieuDe());
+        lbName.setText(notification.getNoiDung());
+        lbDate.setText(notification.getNgayTao());
+        flag = 2;
+        this.maTB = maTB;
+        this.notification = notification;
         this.setSize(new Dimension(50,50));
+        btnConfirmEdit.setVisible(true);
+        btnDelete.setVisible(true);
+    }
+    public NotificationItem(Notification notification) {
+        initComponents();
+        lbTitle.setText(notification.getTieuDe());
+        lbDate.setText(notification.getNgayTao());
+        this.content = notification.getNoiDung();
+        flag = 1;
+        if(notification.getMaNguoiTao() == 0){
+            lbName.setText("Người Đăng: ADMIN");
+        }else{
+            lbName.setText("Người Đăng: " + notification.getTenQuanLy());
+        }
+        this.setSize(new Dimension(50,50));
+        btnConfirmEdit.setVisible(false);
+        btnDelete.setVisible(false);
     }
 
     /**
@@ -34,10 +62,96 @@ public class NotificationItem extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        notificationDialog = new javax.swing.JDialog();
+        lbDate1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtTitle = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtContent = new javax.swing.JTextArea();
+        btnEditNotify = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         lbTitle = new javax.swing.JLabel();
         lbDate = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lbName = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
+        btnConfirmEdit = new javax.swing.JButton();
+
+        notificationDialog.setTitle("SỬA THÔNG BÁO");
+
+        lbDate1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbDate1.setText("Date");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setText("TIÊU ĐỀ:");
+
+        txtTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setText("NỘI DUNG:");
+
+        txtContent.setColumns(20);
+        txtContent.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtContent.setRows(5);
+        jScrollPane1.setViewportView(txtContent);
+
+        btnEditNotify.setText("SỬA");
+        btnEditNotify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditNotifyActionPerformed(evt);
+            }
+        });
+
+        btnExit.setText("THOÁT");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout notificationDialogLayout = new javax.swing.GroupLayout(notificationDialog.getContentPane());
+        notificationDialog.getContentPane().setLayout(notificationDialogLayout);
+        notificationDialogLayout.setHorizontalGroup(
+            notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(notificationDialogLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbDate1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtTitle, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(notificationDialogLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnEditNotify, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnExit)
+                .addGap(38, 38, 38))
+        );
+        notificationDialogLayout.setVerticalGroup(
+            notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(notificationDialogLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lbDate1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(notificationDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditNotify)
+                    .addComponent(btnExit))
+                .addContainerGap())
+        );
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -46,32 +160,57 @@ public class NotificationItem extends javax.swing.JPanel {
             }
         });
 
-        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setForeground(new java.awt.Color(255, 51, 51));
         lbTitle.setText("TIÊU ĐỀ CỦA THÔNG BÁO");
 
         lbDate.setText("THỜI GIAN ĐĂNG");
 
+        lbName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbName.setForeground(new java.awt.Color(0, 51, 255));
         lbName.setText("Người Đăng:");
+
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Custom/Image/DeleteSmall.png"))); // NOI18N
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnConfirmEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Custom/Image/EditSmall.png"))); // NOI18N
+        btnConfirmEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmEditActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbDate, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addComponent(lbDate, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(btnConfirmEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConfirmEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbDate, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
@@ -82,16 +221,66 @@ public class NotificationItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        NotificationContent Content = new NotificationContent(lbTitle.getText(),this.content,lbDate.getText());
-        Content.setVisible(true);
-        Content.setLocationRelativeTo(null);
+        if(flag ==1){
+            NotificationContent content = new NotificationContent(lbTitle.getText(),this.content,lbDate.getText());
+            content.setVisible(true);
+            content.setLocationRelativeTo(null);
+        }else{
+            txtContent.setText(lbName.getText());
+            NotificationContent content = new NotificationContent(lbTitle.getText(),txtContent.getText(),lbDate.getText());
+            content.setVisible(true);
+            content.setLocationRelativeTo(null);
+        }
+        
     }//GEN-LAST:event_formMousePressed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        NotificationController controller = new NotificationController();
+        if(JOptionPane.showConfirmDialog(this,"Bạn có chắc chắc muốn Xoá!" , "CẢNH BÁO", JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
+            controller.deleteDataNotification(this.maTB, this);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnConfirmEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmEditActionPerformed
+        notificationDialog.setVisible(true);
+        txtTitle.setText(lbTitle.getText());
+        txtContent.setText(lbName.getText());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+        Date current = new Date();
+        lbDate1.setText(formatter.format(current).toString());
+        notificationDialog.setSize(600,350);
+        notificationDialog.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnConfirmEditActionPerformed
+
+    private void btnEditNotifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditNotifyActionPerformed
+        NotificationController controller = new  NotificationController();
+        if(JOptionPane.showConfirmDialog(this,"Bạn có chắc chắc muốn Sửa!" , "CẢNH BÁO", JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
+            controller.updateDataNotification(txtTitle, txtContent, lbDate1,lbTitle,lbName,lbDate,this.notification.getMaTB(), notificationDialog);
+            
+        }
+    }//GEN-LAST:event_btnEditNotifyActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        // TODO add your handling code here:
+        notificationDialog.setVisible(false);
+    }//GEN-LAST:event_btnExitActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConfirmEdit;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEditNotify;
+    private javax.swing.JButton btnExit;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbDate;
+    private javax.swing.JLabel lbDate1;
     private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JDialog notificationDialog;
+    private javax.swing.JTextArea txtContent;
+    private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }

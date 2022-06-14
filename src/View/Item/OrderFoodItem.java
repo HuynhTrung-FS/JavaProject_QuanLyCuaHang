@@ -4,7 +4,9 @@
  */
 package View.Item;
 
+import View.Salesman.OrderFoodCustom;
 import java.awt.Dimension;
+import javax.swing.JButton;
 
 /**
  *
@@ -18,7 +20,7 @@ public class OrderFoodItem extends javax.swing.JPanel {
     private String temp;
     private int count = 0;
     private float price = 0 ;
-    private float Tong = 0;
+    private float tong = 0;
     public OrderFoodItem(String foodName,float foodPrice) {
         initComponents();
         this.setSize(new Dimension(50,50));
@@ -100,21 +102,20 @@ public class OrderFoodItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        setCount(getCount() + 1);
+        setCount(count + 1);
         txtCount.setText(String.valueOf(Integer.parseInt(txtCount.getText())+1));
         lbPrice.setText(String.valueOf(Float.parseFloat(txtCount.getText())* Float.parseFloat(temp)));
-        setTong(price * getCount());
-  
+        tong = price * count;
+        OrderFoodCustom order = new OrderFoodCustom();
+        order.lbSumPrice.setText(String.valueOf(tong));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         setCount(getCount() - 1);
         if(getCount() < 0) setCount(getCount() + 1);
         txtCount.setText(String.valueOf(Integer.parseInt(txtCount.getText())-1));
         if(Integer.parseInt(txtCount.getText())<0){
             txtCount.setText(String.valueOf(Integer.parseInt(txtCount.getText())+1));  
-            
         }
         else{
             lbPrice.setText(String.valueOf(Float.parseFloat(txtCount.getText())* Float.parseFloat(temp)));
@@ -124,8 +125,8 @@ public class OrderFoodItem extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbFoodName;
     private javax.swing.JLabel lbPrice;
@@ -153,14 +154,14 @@ public class OrderFoodItem extends javax.swing.JPanel {
      * @return the Tong
      */
     public float getTong() {
-        return Tong;
+        return tong;
     }
 
     /**
      * @param Tong the Tong to set
      */
     public void setTong(float Tong) {
-        this.Tong = Tong;
+        this.tong = Tong;
     }
 
     /**

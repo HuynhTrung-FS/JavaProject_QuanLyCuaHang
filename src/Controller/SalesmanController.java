@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Dao.EmployeeDao;
 import Dao.SalesmanDao;
 import JDBCConnect.DataConnect;
 import Model.Employee.Employee;
@@ -45,7 +46,7 @@ public class SalesmanController {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         tableModel.setRowCount(0);
         for(int i =0;i<list.size();i++){
-            Object[] row = new Object[13];
+            Object[] row = new Object[14];
             row[0] = list.get(i).getMaNV();
             row[1] = list.get(i).getTenNV();
             row[2] = dateFormat.format(list.get(i).getNgaySinh());
@@ -58,12 +59,13 @@ public class SalesmanController {
             row[4] = list.get(i).getDiaChi();
             row[5] = list.get(i).getCMND();
             row[6] = list.get(i).getSDT();
-            row[7] = dateFormat.format(list.get(i).getNgayVaoLam());
-            row[8] = list.get(i).getHinhAnhNV();
-            row[9] = list.get(i).getLuongCB();
-            row[10] = list.get(i).getTaiKhoan();
-            row[11] = list.get(i).getMatKhau();
-            row[12] = list.get(i).getChiNhanh();
+            row[7] = list.get(i).getEmail();
+            row[8] = dateFormat.format(list.get(i).getNgayVaoLam());
+            row[9] = list.get(i).getHinhAnhNV();
+            row[10] = list.get(i).getLuongCB();
+            row[11] = list.get(i).getTaiKhoan();
+            row[12] = list.get(i).getMatKhau();
+            row[13] = list.get(i).getChiNhanh();
             tableModel.addRow(row);       
         }
     }
@@ -75,7 +77,7 @@ public class SalesmanController {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         tableModel.setRowCount(0);
         for(int i =0;i<list.size();i++){
-            Object[] row = new Object[13];
+            Object[] row = new Object[14];
             row[0] = list.get(i).getMaNV();
             row[1] = list.get(i).getTenNV();
             row[2] = dateFormat.format(list.get(i).getNgaySinh());
@@ -88,17 +90,18 @@ public class SalesmanController {
             row[4] = list.get(i).getDiaChi();
             row[5] = list.get(i).getCMND();
             row[6] = list.get(i).getSDT();
-            row[7] = dateFormat.format(list.get(i).getNgayVaoLam());
-            row[8] = list.get(i).getHinhAnhNV();
-            row[9] = new BigDecimal(list.get(i).getLuongCB());
-            row[10] = list.get(i).getTaiKhoan();
-            row[11] = list.get(i).getMatKhau();
-            row[12] = list.get(i).getChiNhanh();
+            row[7] = list.get(i).getEmail();
+            row[8] = dateFormat.format(list.get(i).getNgayVaoLam());
+            row[9] = list.get(i).getHinhAnhNV();
+            row[10] = new BigDecimal(list.get(i).getLuongCB());
+            row[11] = list.get(i).getTaiKhoan();
+            row[12] = list.get(i).getMatKhau();
+            row[13] = list.get(i).getChiNhanh();
             tableModel.addRow(row);       
         }
     }
     //reset các ô điền nhân viên bán hàng thành ô trống
-    public void resetDataEmployee(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword){
+    public void resetDataEmployee(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword){
         long millis=System.currentTimeMillis();  
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dateSet = dateFormat.format(millis);
@@ -113,6 +116,7 @@ public class SalesmanController {
         txtAddress.setText("");
         txtCMND.setText("");
         txtPhoneNumber.setText("");
+        txtEmail.setText("");
         try {
             dateOfWork.setDate(dateFormat.parse(dateSet));
         } catch (ParseException ex) {
@@ -124,8 +128,8 @@ public class SalesmanController {
         txtPassword.setText("");
     }
     //Thêm dữ liệu nhân viên bán hàng tất cả chi nhánh
-    public void addDataSalesman(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,JFrame frame){
-        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")){
+    public void addDataSalesman(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,JFrame frame){
+        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")||txtLinkImage.getText().equals("")){
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Dữ liệu trống ?. Thêm nhân viên thất bại!!");
             message.showNotification();
             return;
@@ -136,7 +140,8 @@ public class SalesmanController {
         }
         List<Employee> list = new ArrayList<>();
         SalesmanDao salesmanData = new SalesmanDao();
-        list = salesmanData.chooseFullData();
+        EmployeeDao employeeData = new EmployeeDao();
+        list = employeeData.chooseFullData();
         for(int i =0;i<list.size();i++){
             if(txtCMND.getText().equals(list.get(i).getCMND())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"CMND đã có người sử dụng. Dữ liệu trùng!!");
@@ -146,16 +151,16 @@ public class SalesmanController {
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"SĐT đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
-            } else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
+            } else if(txtEmail.getText().equals(list.get(i).getEmail())){
+                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Email đã có người sử dụng. Dữ liệu trùng!!");
+                message.showNotification();
+                return;
+            }else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Hình ảnh đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
             }
-            else if(txtUser.getText().equals(list.get(i).getTaiKhoan())){
-                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Tài khoản đã có người sử dụng. Dữ liệu trùng!!");
-                message.showNotification();
-                return;
-            }else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
+            else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Mật Khẩu đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
@@ -168,6 +173,7 @@ public class SalesmanController {
         employee.setDiaChi(txtAddress.getText());
         employee.setCMND(txtCMND.getText());
         employee.setSDT(txtPhoneNumber.getText());
+        employee.setEmail(txtEmail.getText());
         employee.setNgayVaoLam(dateOfWork.getDate());
         employee.setHinhAnhNV(txtLinkImage.getText());
         employee.setLuongCB(Float.valueOf(txtSalary.getText()));
@@ -176,14 +182,14 @@ public class SalesmanController {
         employee.setChiNhanh(Integer.valueOf(txtBranch.getText()));
         salesmanData.insert(employee);
         showDataSalesman(tableModel);
-        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
+        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,txtEmail,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
         MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_LEFT,"Thêm nhân viên Thành Công!!");
         message.showNotification();
         
     }
      //Thêm dữ liệu nhân viên bán hàng 1 chi nhánh
-    public void addDataSalesmanByBranch(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,int branch,DefaultTableModel tableModel,JFrame frame){
-        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")){
+    public void addDataSalesmanByBranch(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,int branch,DefaultTableModel tableModel,JFrame frame){
+        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")||txtLinkImage.getText().equals("")){
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Dữ liệu trống ?. Thêm nhân viên thất bại!!");
             message.showNotification();
             return;
@@ -194,7 +200,8 @@ public class SalesmanController {
         }
         List<Employee> list = new ArrayList<>();
         SalesmanDao salesmanData = new SalesmanDao();
-        list = salesmanData.chooseFullData();
+        EmployeeDao employeeData = new EmployeeDao();
+        list = employeeData.chooseFullData();
         for(int i =0;i<list.size();i++){
             if(txtCMND.getText().equals(list.get(i).getCMND())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"CMND đã có người sử dụng. Dữ liệu trùng!!");
@@ -204,16 +211,17 @@ public class SalesmanController {
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"SĐT đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
-            } else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
+            } else if(txtEmail.getText().equals(list.get(i).getEmail())){
+                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Email đã có người sử dụng. Dữ liệu trùng!!");
+                message.showNotification();
+                return;
+            } 
+            else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Hình ảnh đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
             }
-            else if(txtUser.getText().equals(list.get(i).getTaiKhoan())){
-                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Tài khoản đã có người sử dụng. Dữ liệu trùng!!");
-                message.showNotification();
-                return;
-            }else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
+            else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Mật Khẩu đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
@@ -226,6 +234,7 @@ public class SalesmanController {
         employee.setDiaChi(txtAddress.getText());
         employee.setCMND(txtCMND.getText());
         employee.setSDT(txtPhoneNumber.getText());
+        employee.setCMND(txtEmail.getText());
         employee.setNgayVaoLam(dateOfWork.getDate());
         employee.setHinhAnhNV(txtLinkImage.getText());
         employee.setLuongCB(Float.valueOf(txtSalary.getText()));
@@ -234,13 +243,13 @@ public class SalesmanController {
         employee.setChiNhanh(branch);
         salesmanData.insert(employee);
         showDataSalesmanByBranch(branch,tableModel);
-        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
+        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,txtEmail,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
         MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_LEFT,"Thêm nhân viên Thành Công!!");
         message.showNotification();
         
     }
     ////Nhấn vào dữ liệu trên bảng sẽ hiển thị trên ô điền
-    public void clickTableData(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,int selectedRow){
+    public void clickTableData(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,int selectedRow){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         txtMaNV.setText(tableModel.getValueAt(selectedRow, 0).toString());
         txtName.setText(tableModel.getValueAt(selectedRow, 1).toString());
@@ -254,19 +263,20 @@ public class SalesmanController {
         txtAddress.setText(tableModel.getValueAt(selectedRow, 4).toString());
         txtCMND.setText(tableModel.getValueAt(selectedRow, 5).toString());
         txtPhoneNumber.setText(tableModel.getValueAt(selectedRow, 6).toString());
+        txtEmail.setText(tableModel.getValueAt(selectedRow, 7).toString());
         try {
-            dateOfWork.setDate(dateFormat.parse(tableModel.getValueAt(selectedRow, 7).toString()));
+            dateOfWork.setDate(dateFormat.parse(tableModel.getValueAt(selectedRow, 8).toString()));
         } catch (ParseException ex) {
             Logger.getLogger(SalesmansCustom.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txtLinkImage.setText(tableModel.getValueAt(selectedRow, 8).toString());
-        txtSalary.setText(tableModel.getValueAt(selectedRow, 9).toString());
-        txtUser.setText(tableModel.getValueAt(selectedRow, 10).toString());
-        txtPassword.setText(tableModel.getValueAt(selectedRow, 11).toString());
-        txtBranch.setText(tableModel.getValueAt(selectedRow, 12).toString());
+        txtLinkImage.setText(tableModel.getValueAt(selectedRow, 9).toString());
+        txtSalary.setText(tableModel.getValueAt(selectedRow, 10).toString());
+        txtUser.setText(tableModel.getValueAt(selectedRow, 11).toString());
+        txtPassword.setText(tableModel.getValueAt(selectedRow, 12).toString());
+        txtBranch.setText(tableModel.getValueAt(selectedRow, 13).toString());
     }
     //Xoá dữ liệu nhân viên bán hàng tất cả chi nhánh
-    public void deleteDataSalesman(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,JFrame frame){
+    public void deleteDataSalesman(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,JFrame frame){
         SalesmanDao controller = new SalesmanDao();
         if (txtMaNV.getText().equals("")){
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Dữ liệu trống.Xoá nhân viên thất bại!!");
@@ -274,13 +284,13 @@ public class SalesmanController {
         }else{
             controller.delete(Integer.valueOf(txtMaNV.getText()));
             showDataSalesman(tableModel);
-            resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
+            resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,txtEmail,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_LEFT,"Xoá nhân viên Thành Công!!");
             message.showNotification();
         }
     }
     //Xoá dữ liệu nhân viên bán hàng 1 chi nhánh
-    public void deleteDataSalesmanByBranch(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,int branch,DefaultTableModel tableModel,JFrame frame){
+    public void deleteDataSalesmanByBranch(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,int branch,DefaultTableModel tableModel,JFrame frame){
         SalesmanDao controller = new SalesmanDao();
         if (txtMaNV.getText().equals("")){
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Dữ liệu trống.Xoá nhân viên thất bại!!");
@@ -288,20 +298,20 @@ public class SalesmanController {
         }else{
             controller.delete(Integer.valueOf(txtMaNV.getText()));
             showDataSalesmanByBranch(branch,tableModel);
-            resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
+            resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,txtEmail,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_LEFT,"Xoá nhân viên Thành Công!!");
             message.showNotification();
         }
     }
     //Cập nhật dữ liệu nhân viên bán hàng tất cả chi nhánh
-    public void updateDataSalesman(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,JFrame frame){
+    public void updateDataSalesman(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,JFrame frame){
         SalesmanDao salesmanData = new SalesmanDao();
-        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")){
+        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("") ||txtLinkImage.getText().equals("")){
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Dữ liệu trống ?. Cập nhật nhân viên thất bại!!");
             message.showNotification();
             return;
         }else if(dateOfWork.getDate().getYear() - dateOfBirth.getDate().getYear() < 18){
-            MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Nhân viên chưa đủ 18 tuổi ?. Thêm nhân viên thất bại!!");
+            MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Nhân viên chưa đủ 18 tuổi ?. Cập nhật nhân viên thất bại!!");
             message.showNotification();
             return;
         }
@@ -316,16 +326,16 @@ public class SalesmanController {
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"SĐT đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
+            } else if(txtEmail.getText().equals(list.get(i).getEmail())){
+                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Email đã có người sử dụng. Dữ liệu trùng!!");
+                message.showNotification();
+                return;
             } else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Hình ảnh đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
             }
-            else if(txtUser.getText().equals(list.get(i).getTaiKhoan())){
-                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Tài khoản đã có người sử dụng. Dữ liệu trùng!!");
-                message.showNotification();
-                return;
-            }else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
+            else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Mật Khẩu đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
@@ -339,6 +349,7 @@ public class SalesmanController {
         employee.setDiaChi(txtAddress.getText());
         employee.setCMND(txtCMND.getText());
         employee.setSDT(txtPhoneNumber.getText());
+        employee.setEmail(txtEmail.getText());
         employee.setNgayVaoLam(dateOfWork.getDate());
         employee.setHinhAnhNV(txtLinkImage.getText());
         employee.setLuongCB(Float.valueOf(txtSalary.getText()));
@@ -347,19 +358,19 @@ public class SalesmanController {
         employee.setChiNhanh(Integer.valueOf(txtBranch.getText()));
         salesmanData.updateSalesman(employee);
         showDataSalesman(tableModel);
-        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
+        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,txtEmail,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
         MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_LEFT,"Cập nhập nhân viên thành công!!");
         message.showNotification();
     }
     //Cập nhật dữ liệu nhân viên bán hàng 1 chi nhánh
-    public void updateDataSalesmanByBranch(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,int branch,DefaultTableModel tableModel,JFrame frame){
+    public void updateDataSalesmanByBranch(JTextField txtMaNV,JTextField txtName,JDateChooser dateOfBirth,JComboBox cbGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JDateChooser dateOfWork,JTextField txtLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,int branch,DefaultTableModel tableModel,JFrame frame){
         SalesmanDao salesmanData = new SalesmanDao();
-        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")){
+        if(txtName.getText().equals("")||txtAddress.getText().equals("")||txtCMND.getText().equals("")||txtPhoneNumber.getText().equals("")||txtUser.getText().equals("")||txtPassword.getText().equals("")||txtLinkImage.getText().equals("")){
             MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Dữ liệu trống ?. Cập nhật nhân viên thất bại!!");
             message.showNotification();
             return;
         }else if(dateOfWork.getDate().getYear() - dateOfBirth.getDate().getYear() < 18){
-            MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Nhân viên chưa đủ 18 tuổi ?. Thêm nhân viên thất bại!!");
+            MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Nhân viên chưa đủ 18 tuổi ?. Cập nhật nhân viên thất bại!!");
             message.showNotification();
             return;
         }
@@ -374,16 +385,17 @@ public class SalesmanController {
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"SĐT đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
-            } else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
+            }else if(txtEmail.getText().equals(list.get(i).getEmail())){
+                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Email đã có người sử dụng. Dữ liệu trùng!!");
+                message.showNotification();
+                return;
+            } 
+            else if(txtLinkImage.getText().equals(list.get(i).getHinhAnhNV())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Hình ảnh đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
             }
-            else if(txtUser.getText().equals(list.get(i).getTaiKhoan())){
-                MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Tài khoản đã có người sử dụng. Dữ liệu trùng!!");
-                message.showNotification();
-                return;
-            }else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
+            else if(txtPassword.getText().equals(list.get(i).getMatKhau())){
                 MessageNotify message = new MessageNotify(frame,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_LEFT,"Mật Khẩu đã có người sử dụng. Dữ liệu trùng!!");
                 message.showNotification();
                 return;
@@ -397,6 +409,7 @@ public class SalesmanController {
         employee.setDiaChi(txtAddress.getText());
         employee.setCMND(txtCMND.getText());
         employee.setSDT(txtPhoneNumber.getText());
+        employee.setEmail(txtEmail.getText());
         employee.setNgayVaoLam(dateOfWork.getDate());
         employee.setHinhAnhNV(txtLinkImage.getText());
         employee.setLuongCB(Float.valueOf(txtSalary.getText()));
@@ -404,7 +417,7 @@ public class SalesmanController {
         employee.setMatKhau(txtPassword.getText());
         salesmanData.updateSalesmanByBranch(employee);
         showDataSalesmanByBranch(branch,tableModel);
-        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
+        resetDataEmployee(txtMaNV,txtName,dateOfBirth,cbGender,txtAddress,txtCMND,txtPhoneNumber,txtEmail,dateOfWork,txtLinkImage,txtSalary,txtUser,txtPassword);
         MessageNotify message = new MessageNotify(frame,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_LEFT,"Cập nhập nhân viên thành công!!");
         message.showNotification();
     }
@@ -413,7 +426,6 @@ public class SalesmanController {
         SalesmanDao salesman = new SalesmanDao();
         Pattern p = Pattern.compile("^[0-9]+$");
         if(txtId.getText().equals("")){
-//            showDataEmployeeByBranch(branch,tableModel);
             JOptionPane.showMessageDialog(panel, "Ô Điền Đang Trống!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -426,7 +438,7 @@ public class SalesmanController {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 tableModel.setRowCount(0);
                 for(int i =0;i<dataList.size();i++){
-                    Object[] row = new Object[12];
+                    Object[] row = new Object[13];
                     row[0] = dataList.get(i).getMaNV();
                     row[1] = dataList.get(i).getTenNV();
                     row[2] = dateFormat.format(dataList.get(i).getNgaySinh());
@@ -439,11 +451,12 @@ public class SalesmanController {
                     row[4] = dataList.get(i).getDiaChi();
                     row[5] = dataList.get(i).getCMND();
                     row[6] = dataList.get(i).getSDT();
-                    row[7] = dateFormat.format(dataList.get(i).getNgayVaoLam());
-                    row[8] = dataList.get(i).getHinhAnhNV();
-                    row[9] = dataList.get(i).getLuongCB();
-                    row[10] = dataList.get(i).getTaiKhoan();
-                    row[11] = dataList.get(i).getMatKhau();
+                    row[7] = dataList.get(i).getEmail();
+                    row[8] = dateFormat.format(dataList.get(i).getNgayVaoLam());
+                    row[9] = dataList.get(i).getHinhAnhNV();
+                    row[10] = dataList.get(i).getLuongCB();
+                    row[11] = dataList.get(i).getTaiKhoan();
+                    row[12] = dataList.get(i).getMatKhau();
                     tableModel.addRow(row);       
                 }
             }
@@ -460,7 +473,7 @@ public class SalesmanController {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 tableModel.setRowCount(0);
                 for(int i =0;i<dataList.size();i++){
-                    Object[] row = new Object[12];
+                    Object[] row = new Object[13];
                     row[0] = dataList.get(i).getMaNV();
                     row[1] = dataList.get(i).getTenNV();
                     row[2] = dateFormat.format(dataList.get(i).getNgaySinh());
@@ -473,11 +486,12 @@ public class SalesmanController {
                     row[4] = dataList.get(i).getDiaChi();
                     row[5] = dataList.get(i).getCMND();
                     row[6] = dataList.get(i).getSDT();
-                    row[7] = dateFormat.format(dataList.get(i).getNgayVaoLam());
-                    row[8] = dataList.get(i).getHinhAnhNV();
-                    row[9] = dataList.get(i).getLuongCB();
-                    row[10] = dataList.get(i).getTaiKhoan();
-                    row[11] = dataList.get(i).getMatKhau();
+                    row[7] = dataList.get(i).getEmail();
+                    row[8] = dateFormat.format(dataList.get(i).getNgayVaoLam());
+                    row[9] = dataList.get(i).getHinhAnhNV();
+                    row[10] = dataList.get(i).getLuongCB();
+                    row[11] = dataList.get(i).getTaiKhoan();
+                    row[12] = dataList.get(i).getMatKhau();
                     tableModel.addRow(row);       
                 }
             }
@@ -501,7 +515,7 @@ public class SalesmanController {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 tableModel.setRowCount(0);
                 for(int i =0;i<dataList.size();i++){
-                    Object[] row = new Object[12];
+                    Object[] row = new Object[13];
                     row[0] = dataList.get(i).getMaNV();
                     row[1] = dataList.get(i).getTenNV();
                     row[2] = dateFormat.format(dataList.get(i).getNgaySinh());
@@ -514,12 +528,13 @@ public class SalesmanController {
                     row[4] = dataList.get(i).getDiaChi();
                     row[5] = dataList.get(i).getCMND();
                     row[6] = dataList.get(i).getSDT();
-                    row[7] = dateFormat.format(dataList.get(i).getNgayVaoLam());
-                    row[8] = dataList.get(i).getHinhAnhNV();
-                    row[9] = dataList.get(i).getLuongCB();
-                    row[10] = dataList.get(i).getTaiKhoan();
-                    row[11] = dataList.get(i).getMatKhau();
-                    tableModel.addRow(row);       
+                    row[7] = dataList.get(i).getEmail();
+                    row[8] = dateFormat.format(dataList.get(i).getNgayVaoLam());
+                    row[9] = dataList.get(i).getHinhAnhNV();
+                    row[10] = dataList.get(i).getLuongCB();
+                    row[11] = dataList.get(i).getTaiKhoan();
+                    row[12] = dataList.get(i).getMatKhau();
+                    tableModel.addRow(row); 
                 }
             }
         }else{
@@ -535,7 +550,7 @@ public class SalesmanController {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 tableModel.setRowCount(0);
                 for(int i =0;i<dataList.size();i++){
-                    Object[] row = new Object[12];
+                    Object[] row = new Object[13];
                     row[0] = dataList.get(i).getMaNV();
                     row[1] = dataList.get(i).getTenNV();
                     row[2] = dateFormat.format(dataList.get(i).getNgaySinh());
@@ -548,12 +563,13 @@ public class SalesmanController {
                     row[4] = dataList.get(i).getDiaChi();
                     row[5] = dataList.get(i).getCMND();
                     row[6] = dataList.get(i).getSDT();
-                    row[7] = dateFormat.format(dataList.get(i).getNgayVaoLam());
-                    row[8] = dataList.get(i).getHinhAnhNV();
-                    row[9] = dataList.get(i).getLuongCB();
-                    row[10] = dataList.get(i).getTaiKhoan();
-                    row[11] = dataList.get(i).getMatKhau();
-                    tableModel.addRow(row);       
+                    row[7] = dataList.get(i).getEmail();
+                    row[8] = dateFormat.format(dataList.get(i).getNgayVaoLam());
+                    row[9] = dataList.get(i).getHinhAnhNV();
+                    row[10] = dataList.get(i).getLuongCB();
+                    row[11] = dataList.get(i).getTaiKhoan();
+                    row[12] = dataList.get(i).getMatKhau();
+                    tableModel.addRow(row); 
                 }
             }
         }
