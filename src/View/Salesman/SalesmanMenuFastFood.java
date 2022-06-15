@@ -6,6 +6,7 @@ package View.Salesman;
 
 import Controller.FoodController;
 import Dao.FoodDao;
+import Model.Employee.Employee;
 import Model.Food.Food;
 import View.Item.FastFoodItem;
 import java.util.ArrayList;
@@ -22,9 +23,11 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
     /**
      * Creates new form MenuFastFood
      */
-    public SalesmanMenuFastFood() {
+    private Employee employee;
+    public SalesmanMenuFastFood(Employee employee) {
         initComponents();
         excute();
+        this.employee = employee;
     }
     FoodController controller = new FoodController();
     private void excute(){
@@ -64,7 +67,7 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
         jScrollPane6 = new javax.swing.JScrollPane();
         menuDrink = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnCreateBill = new javax.swing.JButton();
         txtFindFood = new javax.swing.JTextField();
         cbType = new javax.swing.JComboBox<>();
         btnFind = new javax.swing.JButton();
@@ -182,11 +185,11 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
 
         jPanel2.add(tabbedMenuPane, java.awt.BorderLayout.CENTER);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setText("TẠO HOÁ ĐƠN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateBill.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCreateBill.setText("TẠO HOÁ ĐƠN");
+        btnCreateBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCreateBillActionPerformed(evt);
             }
         });
 
@@ -219,7 +222,7 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnCreateBill)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -227,7 +230,7 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCreateBill, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtFindFood, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,12 +243,12 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCreateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateBillActionPerformed
         // TODO add your handling code here:
-        OrderFoodCustom a = new OrderFoodCustom();
+        OrderFoodCustom a = new OrderFoodCustom(employee);
         a.setVisible(true);
         a.setLocationRelativeTo(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCreateBillActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
         if(txtFindFood.getText().equals("")){
@@ -265,13 +268,13 @@ public class SalesmanMenuFastFood extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel anotherFood;
     private javax.swing.JPanel bread;
+    private javax.swing.JButton btnCreateBill;
     private javax.swing.JButton btnFind;
     private javax.swing.JComboBox<String> cbType;
     private javax.swing.JPanel chicken;
     private javax.swing.JPanel combo;
     private javax.swing.JPanel drink;
     private javax.swing.JPanel hamburger;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

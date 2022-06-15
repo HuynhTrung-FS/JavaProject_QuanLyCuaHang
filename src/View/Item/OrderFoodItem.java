@@ -5,6 +5,11 @@
 package View.Item;
 
 import View.Salesman.OrderFoodCustom;
+import static View.Salesman.OrderFoodCustom.arr;
+import static View.Salesman.OrderFoodCustom.jLabel6;
+import static View.Salesman.OrderFoodCustom.lbSumPrice;
+import static View.Salesman.OrderFoodCustom.soLuong;
+import static View.Salesman.OrderFoodCustom.sum;
 import java.awt.Dimension;
 import javax.swing.JButton;
 
@@ -17,16 +22,35 @@ public class OrderFoodItem extends javax.swing.JPanel {
     /**
      * Creates new form OrderFoodItem
      */
-    private String temp;
+    //private String temp;
     private int count = 0;
     private float price = 0 ;
     private float tong = 0;
-    public OrderFoodItem(String foodName,float foodPrice) {
+    private int MaDA = 0;
+    public OrderFoodItem(String foodName, float foodPrice, int MaDA) {
+        this.MaDA = MaDA;
         initComponents();
         this.setSize(new Dimension(50,50));
         lbFoodName.setText(foodName);
-        temp = String.valueOf(foodPrice);
+        //temp = String.valueOf(foodPrice);
         price = foodPrice;
+    }
+    
+    public OrderFoodItem(String foodName, float foodPrice, int MaDA, int soLuong) {
+        this.MaDA = MaDA;
+        initComponents();
+        this.setSize(new Dimension(50,50));
+        lbFoodName.setText(foodName);
+        //temp = String.valueOf(foodPrice);
+        price = foodPrice;
+        jButton1.setEnabled(false);
+        jButton1.setVisible(false);
+        jButton2.setEnabled(false);
+        jButton2.setVisible(false);
+        txtCount.setEditable(false);
+        txtCount.setText(String.valueOf(soLuong));
+        lbPrice.setText(String.valueOf(soLuong*foodPrice));
+        this.setSize(200, 28);
     }
 
     @SuppressWarnings("unchecked")
@@ -102,25 +126,58 @@ public class OrderFoodItem extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        setCount(count + 1);
-        txtCount.setText(String.valueOf(Integer.parseInt(txtCount.getText())+1));
-        lbPrice.setText(String.valueOf(Float.parseFloat(txtCount.getText())* Float.parseFloat(temp)));
+        this.count += 1;
+        txtCount.setText(String.valueOf(this.count));
+        lbPrice.setText(String.valueOf(this.count*this.price));
         tong = price * count;
-        OrderFoodCustom order = new OrderFoodCustom();
-        order.lbSumPrice.setText(String.valueOf(tong));
+        
+        //Update soLuong
+        soLuong = 0;
+        for(int i = 0; i<arr.size() ; i++){
+            if(arr.get(i).getCount()>0){
+                soLuong += arr.get(i).getCount();
+            }
+        }
+        jLabel6.setText(String.valueOf(soLuong));
+        
+        //Update sum
+        sum = 0;
+        for(int i = 0; i<arr.size() ; i++){
+            if(arr.get(i).getTong()>0){
+                sum += arr.get(i).getTong();
+            }
+        }
+        lbSumPrice.setText(String.valueOf(sum));
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        setCount(getCount() - 1);
-        if(getCount() < 0) setCount(getCount() + 1);
-        txtCount.setText(String.valueOf(Integer.parseInt(txtCount.getText())-1));
-        if(Integer.parseInt(txtCount.getText())<0){
-            txtCount.setText(String.valueOf(Integer.parseInt(txtCount.getText())+1));  
+        if(this.count>0){
+            this.count -=1;
+            txtCount.setText(String.valueOf(this.count));
+            lbPrice.setText(String.valueOf(this.count*this.price));
+            tong = price * count;
         }
-        else{
-            lbPrice.setText(String.valueOf(Float.parseFloat(txtCount.getText())* Float.parseFloat(temp)));
+        
+        //Update soLuong
+        soLuong = 0;
+        for(int i = 0; i<arr.size() ; i++){
+            if(arr.get(i).getCount()>0){
+                soLuong += arr.get(i).getCount();
+            }
         }
-        setTong(price * getCount());
+        jLabel6.setText(String.valueOf(soLuong));
+        
+        //Update sum
+        sum = 0;
+        for(int i = 0; i<arr.size() ; i++){
+            if(arr.get(i).getTong()>0){
+                sum += arr.get(i).getTong();
+            }
+        }
+        lbSumPrice.setText(String.valueOf(sum));
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -162,6 +219,7 @@ public class OrderFoodItem extends javax.swing.JPanel {
      */
     public void setTong(float Tong) {
         this.tong = Tong;
+        lbPrice.setText(String.valueOf(this.tong));
     }
 
     /**
@@ -176,5 +234,23 @@ public class OrderFoodItem extends javax.swing.JPanel {
      */
     public void setCount(int count) {
         this.count = count;
+        txtCount.setText(String.valueOf(this.count));
     }
+
+    /**
+     * @return the MaDA
+     */
+    public int getMaDA() {
+        return MaDA;
+    }
+
+    /**
+     * @param MaDA the MaDA to set
+     */
+    public void setMaDA(int MaDA) {
+        this.MaDA = MaDA;
+    }
+    
+    
+    
 }

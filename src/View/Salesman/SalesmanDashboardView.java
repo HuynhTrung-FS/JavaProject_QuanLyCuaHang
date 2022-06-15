@@ -18,6 +18,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,6 +42,8 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
 //        //excute();
 //        setIcon();
 //    }
+    public static int[] stateTheCho = new int[10];
+    
     public SalesmanDashboardView(Employee employee) {
         initComponents();
         MessageNotify a = new MessageNotify(this,MessageNotify.Type.SUCCESS,MessageNotify.Location.TOP_CENTER,"Đăng Nhập Thành Công!!");
@@ -112,7 +115,7 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae){
                 panelBody.removeAll();
-                panelBody.add(new SalesmanMenuFastFood());
+                panelBody.add(new SalesmanMenuFastFood(employee));
                 panelBody.repaint();
                 panelBody.revalidate();
             }
@@ -122,7 +125,8 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent ae){
                 panelBody.removeAll();
-                panelBody.add(new SalesmanFoodCard());
+                
+                panelBody.add(new SalesmanFoodCard(stateTheCho));
                 panelBody.repaint();
                 panelBody.revalidate();
             }

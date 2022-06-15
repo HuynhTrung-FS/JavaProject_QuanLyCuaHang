@@ -11,6 +11,7 @@ import java.util.Date;
  * @author ADMIN
  */
 public class BillOrder {
+    int maHD;
     int gia;
     int soLuong;
     Date ngayTao;

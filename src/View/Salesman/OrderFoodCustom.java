@@ -4,12 +4,27 @@
  */
 package View.Salesman;
 
+import Dao.FoodDao;
+import JDBCConnect.DataConnect;
+import Model.Employee.Employee;
+import Model.Food.Food;
 import View.Item.OrderFoodItem;
+import static View.Salesman.SalesmanDashboardView.stateTheCho;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,18 +35,21 @@ public class OrderFoodCustom extends javax.swing.JFrame {
     /**
      * Creates new form OrderFoodCustom
      */
-    private ArrayList<OrderFoodItem> arr = new ArrayList<>(); ;
-    public OrderFoodCustom() {
+    private Employee employee;
+    public static ArrayList<OrderFoodItem> arr = new ArrayList<>();
+    public static int soLuong = 0;
+    public static float sum = 0;
+    
+    public OrderFoodCustom(Employee employee) {
+        this.employee = employee;
         initComponents();
         this.setSize(new Dimension(700,530));
         excute();
-        sum();
         setIcon();
     }
     private void setIcon(){
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Resources/Dashboard/Image/logoSmall.png")));
     }
-    public float sum = 0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,6 +60,14 @@ public class OrderFoodCustom extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        frameAddCustomer = new javax.swing.JFrame();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtTenKH = new javax.swing.JTextField();
+        txtSdt = new javax.swing.JTextField();
+        txtDiaChi = new javax.swing.JTextField();
+        btnOK = new javax.swing.JButton();
         panelHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelbody = new javax.swing.JPanel();
@@ -59,8 +85,42 @@ public class OrderFoodCustom extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lbSumPrice = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+
+        frameAddCustomer.setTitle("Thông Tin Khách Hàng");
+        frameAddCustomer.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Tên Khách Hàng");
+        frameAddCustomer.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setText("Số điện thoại");
+        frameAddCustomer.getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Địa chỉ");
+        frameAddCustomer.getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+
+        txtTenKH.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        frameAddCustomer.getContentPane().add(txtTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 22, 240, 40));
+
+        txtSdt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        frameAddCustomer.getContentPane().add(txtSdt, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 72, 240, 40));
+
+        txtDiaChi.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        frameAddCustomer.getContentPane().add(txtDiaChi, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 122, 240, 40));
+
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
+        frameAddCustomer.getContentPane().add(btnOK, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 60, -1));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -112,7 +172,11 @@ public class OrderFoodCustom extends javax.swing.JFrame {
 
         jLabel6.setText("0");
 
-        lbSumPrice.setText("0.00000000000000000");
+        lbSumPrice.setText("0.0");
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 51, 0));
+        jLabel10.setText("THẺ CHỜ");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -123,21 +187,27 @@ public class OrderFoodCustom extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbSumPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(22, 22, 22))
+                        .addComponent(lbSumPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,21 +220,36 @@ public class OrderFoodCustom extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbSumPrice))
-                        .addGap(40, 40, 40)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 35, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        for(int i = 0; i<stateTheCho.length ; i++){
+            if(stateTheCho[i]==0){
+                jComboBox2.addItem(i+1);
+            }
+        }
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         jButton1.setText("THANH TOÁN");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton1);
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -175,14 +260,161 @@ public class OrderFoodCustom extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void excute(){
-        OrderFoodItem item1 = new OrderFoodItem("Món 1",7);
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataConnect.openConnect();
+            
+            //Create statement
+            Statement st = conn.createStatement();
+            
+            //Create query insert HOA DON
+            SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+            String setDate = simpleDate.format(date);
+            String insertHoaDon = "INSERT INTO HOADON (NgayBan, TongTien, PhuongThucThanhToan, TheCho, GhiChu) VALUES ('" + setDate + "',"
+                    + sum + ",N'" + jComboBox1.getSelectedItem().toString() + "'," + (jComboBox2.getSelectedIndex()+1) + ",N'" + jTextArea1.getText() + "');";
+            
+            //Excute query
+            st.execute(insertHoaDon);
+            
+            //Change stateTheCho
+            stateTheCho[jComboBox2.getSelectedIndex()] = 1;
+            
+            
+            
+            //Close connection
+            conn.close();
+            
+            
+            //Show Frame Khach Hang
+            frameAddCustomer.setSize(400, 300);
+            frameAddCustomer.setLocationRelativeTo(this.getContentPane());
+            frameAddCustomer.setResizable(false);
+            //jFrame1.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            frameAddCustomer.setVisible(true);
+            
+            
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        try {
+            // TODO add your handling code here:
+            Connection conn = DataConnect.openConnect();
+            //Create statement
+            Statement st = conn.createStatement();
+            
+            //Create query insert KHACH HANG
+            String insertKhachHang = "IF NOT EXISTS (SELECT * FROM KHACHHANG WHERE KHACHHANG.MaKH = " + Integer.parseInt(txtSdt.getText()) + ") "
+                    + "INSERT INTO KHACHHANG (MaKH, TenKH, DiaChi) VALUES (" + Integer.parseInt(txtSdt.getText()) + ",N'"
+                    + txtTenKH.getText() + "',N'" + txtDiaChi.getText() + "');";
+            
+            //Excute query insertKhachHang
+            st.executeUpdate(insertKhachHang);
+            
+            //Create query insert HOA DON - KHACH HANG
+            String insertHDKH = "INSERT INTO HOADON_KHACHHANG (MaKH, MaHD) VALUES (" + Integer.parseInt(txtSdt.getText())
+                    + ", IDENT_CURRENT('HOADON'));";
+            
+            //Excute query insertHDKH
+            st.execute(insertHDKH);
+            
+            //Insert HD-DA-NV
+            arr.forEach(item -> {
+                if(item.getCount()>0){
+                    try {
+                        String insertHĐANV = "INSERT INTO HOADON_DOAN_NHANVIEN (MaHD, MaDA, MaNV, SoLuong) VALUES (IDENT_CURRENT('HOADON'),"
+                                + item.getMaDA() + "," + employee.getMaNV() + "," + item.getCount() + ")";
+                        st.execute(insertHĐANV);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            ;
+            JOptionPane.showMessageDialog(this, "Tạo Hoá Đơn Thành Công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            //Close connection
+            conn.close();
+            
+            frameAddCustomer.setVisible(false);
+            frameAddCustomer.dispose();
+            this.setVisible(false);
+            this.dispose();
+            
+            
+            
+            
+            //Reset item => reset arr
+            arr.forEach(item -> {
+                item.setCount(0);
+                item.setTong(0);
+            });
+            
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        OrderFoodItem item2 = new OrderFoodItem("Món 2",10);
-        arr.add(item2);
-        arr.add(item1);
-        addOrder(arr);
+    }//GEN-LAST:event_btnOKActionPerformed
+    private void excute(){
+        try {
+            Connection conn = DataConnect.openConnect();
+            
+            if(arr.size()==0){
+                FoodDao foodDao = new FoodDao();
+                //Add food type COMBo
+                List<Food> listFood = foodDao.chooseMenuByType("COMBO");
+                listFood.forEach(item -> {
+                    arr.add(new OrderFoodItem(item.getTenThucAn(), item.getGiaThucAn(), item.getMaDA()));
+                });
+                
+                //Add food type GÀ
+                listFood = foodDao.chooseMenuByType("GÀ");
+                listFood.forEach(item -> {
+                    arr.add(new OrderFoodItem(item.getTenThucAn(), item.getGiaThucAn(), item.getMaDA()));
+                });
+                
+                //Add food type HAMBURGER     
+                listFood = foodDao.chooseMenuByType("HAMBURGER");
+                listFood.forEach(item -> {
+                    arr.add(new OrderFoodItem(item.getTenThucAn(), item.getGiaThucAn(), item.getMaDA()));
+                });
+                
+                //Add food type ĐỒ UỐNG
+                listFood = foodDao.chooseMenuByType("ĐỒ UỐNG");
+                listFood.forEach(item -> {
+                    arr.add(new OrderFoodItem(item.getTenThucAn(), item.getGiaThucAn(), item.getMaDA()));
+                });
+                
+                //Add food type BÁNH MÌ
+                listFood = foodDao.chooseMenuByType("BÁNH MÌ");
+                listFood.forEach(item -> {
+                    arr.add(new OrderFoodItem(item.getTenThucAn(), item.getGiaThucAn(), item.getMaDA()));
+                });
+                
+                //Add food type ĐỒ ĂN KÈM
+                listFood = foodDao.chooseMenuByType("ĐỒ ĂN KÈM");
+                listFood.forEach(item -> {
+                    arr.add(new OrderFoodItem(item.getTenThucAn(), item.getGiaThucAn(), item.getMaDA()));
+                });
+            }
+            addOrder(arr);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderFoodCustom.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
     private void addOrder(List<OrderFoodItem> itemOrder){
         
         for(int i = 0;i< itemOrder.size();i++){
@@ -190,63 +422,64 @@ public class OrderFoodCustom extends javax.swing.JFrame {
         }
         menuOrder.revalidate();
     }
-    private void sum(){
-        float Tong = 0;
-        for(int i = 0;i<arr.size();i++){
-            Tong = Tong + arr.get(i).getTong();
-        }
-        lbSumPrice.setText(String.valueOf(Tong));                                                                                                                                                                                                                                                                                                                                                                              
-    }
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                OrderFoodCustom a = new OrderFoodCustom();
-                a.setVisible(true);
-                
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(OrderFoodCustom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                OrderFoodCustom a = new OrderFoodCustom();
+//                a.setVisible(true);
+//                
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnOK;
+    private javax.swing.JFrame frameAddCustomer;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    public javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<Integer> jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    public javax.swing.JLabel jLabel6;
+    public static javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -254,9 +487,12 @@ public class OrderFoodCustom extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    public javax.swing.JLabel lbSumPrice;
+    public static javax.swing.JLabel lbSumPrice;
     private javax.swing.JPanel menuOrder;
     private javax.swing.JPanel panelHeader;
     private javax.swing.JPanel panelbody;
+    private javax.swing.JTextField txtDiaChi;
+    private javax.swing.JTextField txtSdt;
+    private javax.swing.JTextField txtTenKH;
     // End of variables declaration//GEN-END:variables
 }

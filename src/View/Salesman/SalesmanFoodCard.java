@@ -6,6 +6,7 @@ package View.Salesman;
 
 import View.Item.FoodCardItem;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,17 +17,16 @@ public class SalesmanFoodCard extends javax.swing.JPanel {
     /**
      * Creates new form Table
      */
-    public SalesmanFoodCard() {
+    public SalesmanFoodCard(int[] list) {
         initComponents();        
-        excute();
+        excute(list);
     }
     
-    private void excute(){
-        int soLuong = 10;
-        
-        for(int i =0;i< soLuong;i++){
-            FoodCardItem card = new FoodCardItem(i+1);
+    private void excute(int[] list){
+        for(int i =0;i< list.length;i++){
+            FoodCardItem card = new FoodCardItem(i+1, list[i]);
             menuCard.add(card);
+            
         }
     }
     /**

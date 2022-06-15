@@ -360,7 +360,4 @@ public class ManagerController {
         ManagerDao managerData = new ManagerDao();
         txtCalendar.setText(managerData.showTextCalendar(employee.getMaNV()));
     }
-     public void updateForgetPassword(){
-         
-     }
 }
