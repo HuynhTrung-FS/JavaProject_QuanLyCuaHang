@@ -42,7 +42,7 @@ public class SalesmanDashboardView extends javax.swing.JFrame {
 //        //excute();
 //        setIcon();
 //    }
-    public static int[] stateTheCho = new int[10];
+    public static int[] stateTheCho = new int[11];
     
     public SalesmanDashboardView(Employee employee) {
         initComponents();

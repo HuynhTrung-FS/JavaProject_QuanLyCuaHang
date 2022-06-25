@@ -350,7 +350,7 @@ public class LoginView extends javax.swing.JFrame {
             return;
         }
         if(txtUser.getText().equals("") || txtPassword.getText().equals("") || txtCaptcha.getText().equals("")){
-            MessageNotify message = new MessageNotify(this,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_CENTER,"Không được để trống tên tài khoản và mật khẩu!!");
+            MessageNotify message = new MessageNotify(this,MessageNotify.Type.WARNING,MessageNotify.Location.TOP_CENTER,"Không được để trống tên tài khoản và mật khẩu, Captcha!!");
             message.showNotification();
             return;
         }

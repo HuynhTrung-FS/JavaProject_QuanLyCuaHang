@@ -4,6 +4,9 @@
  */
 package View.Chart;
 
+import Controller.StatisticsController;
+import Dao.StatisticsDao;
+import Model.Statistics.Statistics;
 import java.awt.Color;
 import java.awt.Toolkit;
 
@@ -16,18 +19,17 @@ public class ChartStatistics extends javax.swing.JFrame {
     /**
      * Creates new form ChartStatistics
      */
-    public ChartStatistics() {
+    StatisticsDao data = new StatisticsDao();
+    public ChartStatistics(Statistics statistics) {
         initComponents();
-         getContentPane().setBackground(new Color(250,250,250));
-        chart.addLegend("Income", new Color(245,189,135));
-        chart.addLegend("Expense", new Color(135,189,245));
-        chart.addLegend("Profit", new Color(189,135,245));
-        chart.addData(new ModelChart("January",new double[]{500,200,80}));
-        chart.addData(new ModelChart("February",new double[]{600,750,90}));
-        chart.addData(new ModelChart("March",new double[]{200,350,460}));
-        chart.addData(new ModelChart("April",new double[]{480,150,750}));
-        chart.addData(new ModelChart("May",new double[]{350,540,300}));
-        chart.addData(new ModelChart("June",new double[]{190,280,81}));
+        getContentPane().setBackground(new Color(250,250,250));
+        //chart.addLegend("Income", new Color(245,189,135));
+        chart.addLegend("DOANH THU", new Color(135,189,245));
+        //chart.addLegend("Profit", new Color(189,135,245));
+        for(int i =1;i<13;i++){
+            chart.addData(new ModelChart("Tháng " + i,new double[]{(double)(data.tinhTong(i, statistics.getYear()))}));
+        }
+        lbName.setText("BIỂU ĐỒ THỐNG KÊ DOANH THU NĂM " + statistics.getYear() + " CỦA 3T FAST FOOD");
         setIcon();
     }
     private void setIcon(){
@@ -42,8 +44,8 @@ public class ChartStatistics extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
         chart = new View.Chart.Chart2D();
+        lbName = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -52,50 +54,35 @@ public class ChartStatistics extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Refresh");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        lbName.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lbName.setForeground(new java.awt.Color(255, 0, 0));
+        lbName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(84, 84, 84))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(21, 21, 21)
                 .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(51, 51, 51))
+                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        chart.clear();
-        chart.addData(new ModelChart("January",new double[]{500,200,80}));
-        chart.addData(new ModelChart("February",new double[]{600,750,90}));
-        chart.addData(new ModelChart("March",new double[]{200,350,460}));
-        chart.addData(new ModelChart("April",new double[]{480,150,750}));
-        chart.addData(new ModelChart("May",new double[]{350,540,300}));
-        chart.addData(new ModelChart("June",new double[]{190,280,81}));
-        chart.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
@@ -133,13 +120,13 @@ public class ChartStatistics extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChartStatistics().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.Chart.Chart2D chart;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel lbName;
     // End of variables declaration//GEN-END:variables
 }

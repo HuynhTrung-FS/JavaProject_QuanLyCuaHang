@@ -16,7 +16,46 @@ public class BillOrder {
     int soLuong;
     Date ngayTao;
     String phuongThucThanhToan;
-    int tongTien;
+    float tongTien;
+    String ghiChu;
+    String tenKH;
+    String SDT;
+
+    public void setTenKH(String tenKH) {
+        this.tenKH = tenKH;
+    }
+
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
+    
+    public String getTenKH() {
+        return tenKH;
+    }
+
+    public String getSDT() {
+        return SDT;
+    }
+    
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+    public void setTongTien(float tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public void setMaHD(int maHD) {
+        this.maHD = maHD;
+    }
+
+    public int getMaHD() {
+        return maHD;
+    }
 
     public void setGia(int gia) {
         this.gia = gia;
@@ -54,7 +93,7 @@ public class BillOrder {
         return phuongThucThanhToan;
     }
 
-    public int getTongTien() {
+    public float getTongTien() {
         return tongTien;
     }
     

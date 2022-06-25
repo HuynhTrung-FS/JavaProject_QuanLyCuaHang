@@ -11,6 +11,7 @@ import Model.Employee.Employee;
 import View.Manager_Salesman.SalesmansCustom;
 import View.MessageNotify.MessageNotify;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Image;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -20,8 +21,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -174,7 +177,39 @@ public class ManagerController {
             Logger.getLogger(SalesmansCustom.class.getName()).log(Level.SEVERE, null, ex);
         }
         txtLinkImage.setText(tableModel.getValueAt(selectedRow, 9).toString());
-        txtSalary.setText(tableModel.getValueAt(selectedRow, 10).toString());
+        txtSalary.setText(String.valueOf(tableModel.getValueAt(selectedRow, 10)));
+        txtUser.setText(tableModel.getValueAt(selectedRow, 11).toString());
+        txtPassword.setText(tableModel.getValueAt(selectedRow, 12).toString());
+        txtBranch.setText(tableModel.getValueAt(selectedRow, 13).toString());
+    }
+    //Hiển thị hình ảnh lên label
+     public void updateLabelImage(String path,JLabel lbImage) {
+        ImageIcon icon = new ImageIcon(path);
+        if(icon != null){
+            Image img = icon.getImage(); 
+            Image newimg = img.getScaledInstance(350, 350,  java.awt.Image.SCALE_SMOOTH);
+            icon = new ImageIcon(newimg);
+            lbImage.setIcon(icon);
+            lbImage.setText(null);
+        }
+        else{
+            lbImage.setText("Image not found");
+            lbImage.setIcon(null);
+        }
+    }
+    //Nhấn vào dữ liệu sẽ hiển thị cụ thể thông tin cửa từng người
+    public void clickTableDataAndShow(JTextField txtMaNV,JTextField txtName,JTextField dateOfBirth,JTextField txtGender,JTextField txtAddress,JTextField txtCMND,JTextField txtPhoneNumber,JTextField txtEmail,JTextField dateOfWork,JLabel lbLinkImage,JTextField txtSalary,JTextField txtUser,JTextField txtPassword,JTextField txtBranch,DefaultTableModel tableModel,int selectedRow){
+        txtMaNV.setText(tableModel.getValueAt(selectedRow, 0).toString());
+        txtName.setText(tableModel.getValueAt(selectedRow, 1).toString());
+        dateOfBirth.setText(tableModel.getValueAt(selectedRow, 2).toString());
+        txtGender.setText(tableModel.getValueAt(selectedRow, 3).toString());
+        txtAddress.setText(tableModel.getValueAt(selectedRow, 4).toString());
+        txtCMND.setText(tableModel.getValueAt(selectedRow, 5).toString());
+        txtPhoneNumber.setText(tableModel.getValueAt(selectedRow, 6).toString());
+        txtEmail.setText(tableModel.getValueAt(selectedRow, 7).toString());
+        dateOfWork.setText(tableModel.getValueAt(selectedRow, 8).toString());
+        updateLabelImage(tableModel.getValueAt(selectedRow, 9).toString(),lbLinkImage);
+        txtSalary.setText(String.valueOf(new BigDecimal((float) tableModel.getValueAt(selectedRow, 10))));
         txtUser.setText(tableModel.getValueAt(selectedRow, 11).toString());
         txtPassword.setText(tableModel.getValueAt(selectedRow, 12).toString());
         txtBranch.setText(tableModel.getValueAt(selectedRow, 13).toString());

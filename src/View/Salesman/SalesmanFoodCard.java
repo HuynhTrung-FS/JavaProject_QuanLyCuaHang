@@ -23,8 +23,8 @@ public class SalesmanFoodCard extends javax.swing.JPanel {
     }
     
     private void excute(int[] list){
-        for(int i =0;i< list.length;i++){
-            FoodCardItem card = new FoodCardItem(i+1, list[i]);
+        for(int i =1;i< list.length;i++){
+            FoodCardItem card = new FoodCardItem(i, list[i]);
             menuCard.add(card);
             
         }

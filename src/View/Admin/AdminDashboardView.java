@@ -14,6 +14,7 @@ import View.Salesman.OfflineOrder;
 import View.Salesman.OnlineOrder;
 import View.Item.MenuItem;
 import View.Login.LoginView;
+import View.Manager.ManagerMenuFastFood;
 import View.Manager_Salesman.ManagerSalesmans;
 import View.MessageNotify.MessageNotify;
 import View.Notification.NotificationManagers;
@@ -67,6 +68,7 @@ public class AdminDashboardView extends javax.swing.JFrame {
         ImageIcon iconEmployee = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Employees.png"));
         ImageIcon iconManager = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Managers.png"));
         ImageIcon iconStatistics = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Statistics.png"));
+        ImageIcon iconMenuFastFood = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/MenuFood.png"));
         /*ImageIcon iconNext = new ImageIcon(getClass().getResource("/Image/image6.png"));*/
         ImageIcon iconNotification = new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/iconNotification.png"));
         //Create subMenu Order
@@ -101,8 +103,17 @@ public class AdminDashboardView extends javax.swing.JFrame {
                 
             }
         });
+         MenuItem menuFood = new MenuItem(iconMenuFastFood,"Menu",new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                panelBody.removeAll();
+                panelBody.add(new ManagerMenuFastFood());
+                panelBody.repaint();
+                panelBody.revalidate();
+            }
+        });
         MenuItem menuHuman = new MenuItem(iconHuman,"Quản Lý Nhân Sự",null,menuEmployee,menuManager);
-        MenuItem menuStatistics= new MenuItem(iconStatistics,"Statistics",new ActionListener(){
+        MenuItem menuStatistics= new MenuItem(iconStatistics,"Thống Kê",new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae){
                 panelBody.removeAll();
@@ -112,7 +123,7 @@ public class AdminDashboardView extends javax.swing.JFrame {
                 
             }
         });
-        addMenu(menuHuman,menuNotification,menuStatistics);
+        addMenu(menuHuman,menuFood,menuNotification,menuStatistics);
     }
     private void addMenu(MenuItem... menu){
         for(int i=0; i<menu.length;i++){

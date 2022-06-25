@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -184,12 +185,12 @@ public class FoodCardItem extends javax.swing.JPanel {
         if (!isCheck()) {
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/TableListNone.png")));
             setCheck(true);
-            stateTheCho[this.stt-1] = 0;
+            stateTheCho[this.stt] = 0;
         }
         else{
             lbIcon.setIcon(new ImageIcon(getClass().getResource("/Resources/Dashboard/Image/TableList.png")));
             setCheck(false);
-            stateTheCho[this.stt-1] = 1;
+            stateTheCho[this.stt] = 1;
         }
         
         //Change stateTheCho in database
@@ -232,7 +233,7 @@ public class FoodCardItem extends javax.swing.JPanel {
             
             //Show result
             if(rs.next()==false){
-                System.out.println("Empty");
+                JOptionPane.showMessageDialog(this, "Thẻ Chờ Đang Trống", "Cảnh Báo", JOptionPane.WARNING_MESSAGE);
             } else {
                 txtMaHD.setText(String.valueOf(rs.getInt(1)));
                 txtGhiChu.setText(rs.getString(6));

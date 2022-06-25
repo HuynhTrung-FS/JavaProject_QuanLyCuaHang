@@ -236,9 +236,10 @@ public class OrderFoodCustom extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        for(int i = 0; i<stateTheCho.length ; i++){
+        jComboBox2.addItem(0);
+        for(int i = 1; i<stateTheCho.length ; i++){
             if(stateTheCho[i]==0){
-                jComboBox2.addItem(i+1);
+                jComboBox2.addItem(i);
             }
         }
 
@@ -274,7 +275,7 @@ public class OrderFoodCustom extends javax.swing.JFrame {
             Date date = new Date();
             String setDate = simpleDate.format(date);
             String insertHoaDon = "INSERT INTO HOADON (NgayBan, TongTien, PhuongThucThanhToan, TheCho, GhiChu) VALUES ('" + setDate + "',"
-                    + sum + ",N'" + jComboBox1.getSelectedItem().toString() + "'," + (jComboBox2.getSelectedIndex()+1) + ",N'" + jTextArea1.getText() + "');";
+                    + sum + ",N'" + jComboBox1.getSelectedItem().toString() + "'," + (jComboBox2.getSelectedIndex()) + ",N'" + jTextArea1.getText() + "');";
             
             //Excute query
             st.execute(insertHoaDon);

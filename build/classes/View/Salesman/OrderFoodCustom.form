@@ -387,8 +387,13 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="jComboBox2">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                  </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="for(int i = 0; i&lt;stateTheCho.length ; i++){&#xa;    if(stateTheCho[i]==0){&#xa;        jComboBox2.addItem(i+1);&#xa;    }&#xa;}"/>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jComboBox2.addItem(0);&#xa;for(int i = 1; i&lt;stateTheCho.length ; i++){&#xa;    if(stateTheCho[i]==0){&#xa;        jComboBox2.addItem(i);&#xa;    }&#xa;}"/>
                     <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="OrderFoodCustom_jComboBox2"/>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Integer&gt;"/>
                   </AuxValues>

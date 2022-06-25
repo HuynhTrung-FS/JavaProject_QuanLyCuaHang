@@ -106,7 +106,7 @@ public class ManagersCustom extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(350, 447));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setPreferredSize(new java.awt.Dimension(350, 800));
+        jPanel4.setPreferredSize(new java.awt.Dimension(350, 900));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("MÃ NHÂN VIÊN:");

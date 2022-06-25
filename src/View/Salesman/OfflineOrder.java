@@ -4,7 +4,9 @@
  */
 package View.Salesman;
 
+import Controller.BillController;
 import java.awt.Font;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 /**
@@ -16,12 +18,16 @@ public class OfflineOrder extends javax.swing.JPanel {
     /**
      * Creates new form OfflineOrder
      */
+    BillController controller = new BillController();
     public OfflineOrder() {
         initComponents();
         offlineTable.getTableHeader().setFont(new Font("Segoe UI",Font.BOLD,18));
-        offlineTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+        excute();
     }
-
+    private void excute(){
+        
+        controller.showDataEmployee((DefaultTableModel)offlineTable.getModel());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,8 +44,9 @@ public class OfflineOrder extends javax.swing.JPanel {
         offlineTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnFind = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        btnReset = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -54,16 +61,16 @@ public class OfflineOrder extends javax.swing.JPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        offlineTable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        offlineTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         offlineTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Hoá Đơn", "Tên Khách Hàng", "Thành Tiền"
+                "Mã Hoá Đơn", "Ngày Tạo", "Tên Khách Hàng", "SĐT", "Thành Tiền", "Phương Thức Thanh Toán"
             }
         ));
         offlineTable.setFocusable(false);
@@ -76,9 +83,22 @@ public class OfflineOrder extends javax.swing.JPanel {
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Search.png"))); // NOI18N
+        btnFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Dashboard/Image/Search.png"))); // NOI18N
+        btnFind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFindActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID", "SĐT" }));
+
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Custom/Image/Reseting.png"))); // NOI18N
+        btnReset.setText("LÀM MỚI");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -90,19 +110,23 @@ public class OfflineOrder extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(459, Short.MAX_VALUE))
+                .addComponent(btnFind)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+                .addComponent(btnReset)
+                .addGap(24, 24, 24))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnReset)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnFind, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
@@ -110,9 +134,19 @@ public class OfflineOrder extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
+        BillController controller = new BillController();
+        controller.findDataEmployee(jTextField1, jComboBox1, (DefaultTableModel)offlineTable.getModel(), this);
+    }//GEN-LAST:event_btnFindActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        controller.showDataEmployee((DefaultTableModel)offlineTable.getModel());
+    }//GEN-LAST:event_btnResetActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnFind;
+    private javax.swing.JButton btnReset;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
